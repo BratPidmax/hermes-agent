@@ -120,7 +120,13 @@ export const pl: Translations = defineLocale({
       gatewaySignInRequired: 'Wymagane logowanie do bramki',
       ipcBridgeUnavailable: 'Mostek IPC pulpitu jest niedostępny.'
     ,
-      gatewayConnectionLostDetail: 'Ponawianie trwa w tle. Możesz nadal czytać i przygotowywać wiadomości — jeśli problem nie ustąpi, otwórz ustawienia bramy.',},
+      gatewayConnectionLostDetail: 'Ponawianie trwa w tle. Możesz nadal czytać i przygotowywać wiadomości — jeśli problem nie ustąpi, otwórz ustawienia bramy.',
+      restartHermes: 'Zrestartuj Hermesa',
+      openLogs: 'Otwórz logi',
+      reconnectNow: 'Połącz teraz ponownie',
+      connectionSettings: 'Ustawienia połączenia',
+      gatewaySignInRequiredDetail: 'Zaloguj się ponownie, aby połączyć. Twoje czaty i ustawienia są bezpieczne.',
+      signInAgain: 'Zaloguj się ponownie',},
     failure: {
       title: "Hermes nie mógł się uruchomić",
       description:
@@ -154,8 +160,17 @@ export const pl: Translations = defineLocale({
       cloudDownDescription: 'Zarządzany przez Nous agent chmurowy, z którym łączy się ta brama, zwraca błąd serwera. Nie można go stąd uruchomić ponownie — sprawdź jego stan, przełącz się na bramę lokalną albo skontaktuj się z pomocą techniczną.',
       cloudDownHint: 'Poniższe przyciski otwierają Nous Portal (stan instancji i sterowanie) oraz nasz Discord z pomocą.',
       cloudDownCheckPortal: 'Sprawdź stan w Portalu',
-      cloudDownDiscord: 'Uzyskaj pomoc na Discordzie',}
-  },
+      cloudDownDiscord: 'Uzyskaj pomoc na Discordzie',
+      details: 'Szczegóły',}
+  ,
+    causes: {
+      exitedEarly: 'Usługa działająca w tle Hermesa zatrzymała się tuż po starcie.',
+      timedOut: 'Usługa działająca w tle Hermesa nie odpowiedziała na czas.',
+      permission: 'Hermes nie mógł pisać do swojego folderu danych (problem z uprawnieniami).',
+      diskFull: 'Dysk jest pełny, więc Hermes nie mógł wystartować.',
+      portInUse: 'Inny program zajmuje port sieciowy potrzebny Hermesowi.',
+      installMissing: 'Część instalacji Hermesa brakuje. Wybierz Napraw instalację, aby ją przywrócić.',
+    },},
 
   notifications: {
     region: 'Powiadomienia',
@@ -2427,7 +2442,18 @@ export const pl: Translations = defineLocale({
     durationSeconds: seconds => `${seconds} s`,
     durationMinutes: (minutes, seconds) => `${minutes} min ${seconds} s`,
     tokens: value => `Tokeny: ${value}`
-  },
+  ,
+    extendedTranscript: 'Rozszerzony transkrypt',
+    transcriptTruncated: 'Pokazuję najnowsze 16 KiB',
+    transcriptUnavailable: 'Transkrypt na żywo niedostępny',
+    moreAgents: count => `+${count} kolejnych agentów`,
+    queued: 'W kolejce',
+    waitingActivity: 'Czekam na aktywność',
+    steer: 'Steruj',
+    steerPlaceholder: 'Instrukcje dla tego podagenta',
+    steerQueued: 'Zakolejkowane do następnego punktu kontrolnego',
+    stopRequested: 'Zatrzymanie zgłoszone',
+    requestRejected: 'Podagent nie przyjął żądania',},
 
   commandCenter: {
     close: 'Zamknij centrum poleceń',
@@ -2520,7 +2546,11 @@ export const pl: Translations = defineLocale({
       settings: { title: 'Ustawienia', detail: 'Skonfiguruj Hermes Desktop' },
       messaging: { title: 'Wiadomości', detail: 'Skonfiguruj Telegram, Slack, Discord i inne' },
       artifacts: { title: 'Artefakty', detail: 'Przeglądaj wygenerowane wyniki' }
-    },
+    ,
+      capabilities: {
+        title: 'Możliwości',
+        detail: 'Umiejętności, narzędzia, serwery MCP i wtyczki',
+      },},
     sectionEntries: {
       sessions: { title: 'Panel sesji', detail: 'Szukaj, przypinaj i zarządzaj sesjami' },
       system: { title: 'Panel systemowy', detail: 'Stan bramki, logi, restart/aktualizacja' },
@@ -2616,7 +2646,11 @@ export const pl: Translations = defineLocale({
     }
   ,
     openBrowser: 'Otwórz przeglądarkę',
-    reloadWindow: 'Wczytaj ponownie okno',},
+    reloadWindow: 'Wczytaj ponownie okno',
+    sharedGatewayRestartTitle: 'Zrestartować współdzieloną bramkę?',
+    sharedGatewayRestartDescription: bots => `Wszystkie boty na tym urządzeniu połączą się ponownie: ${bots}`,
+    sharedGatewayRestartConfirm: 'Zrestartuj wszystkie',
+    sharedGatewayRestarted: count => `Współdzielona bramka zrestartowana (${count} ${count === 1 ? 'bot' : count < 5 ? 'boty' : 'botów'})`,},
 
   messaging: {
     search: 'Szukaj komunikatora...',
@@ -4299,7 +4333,14 @@ export const pl: Translations = defineLocale({
     terminalCloseOthers: 'Zamknij pozostałe',
     terminalCloseAll: 'Zamknij wszystko',
     addToChat: 'Dodaj do czatu'
-  },
+  ,
+    remotePickerNewFolder: 'Nowy folder',
+    remotePickerFolderName: 'Nazwa folderu',
+    remotePickerCreateFolder: 'Utwórz folder',
+    remotePickerInvalidFolderName: 'Podaj pojedynczą nazwę folderu, bez ukośników.',
+    remotePickerCreateFolderFailed: error => `Nie udało się utworzyć folderu (${error}).`,
+    showIgnored: 'Pokaż pliki ignorowane przez gita',
+    hideIgnored: 'Ukryj pliki ignorowane przez gita',},
 
   preview: {
     tab: 'Podgląd',
@@ -4914,7 +4955,35 @@ export const pl: Translations = defineLocale({
     secretTitle: 'Wymagany sekret',
     secretDesc: 'Hermes potrzebuje danych uwierzytelniających, aby kontynuować.',
     secretPlaceholder: 'tajna wartość'
-  },
+  ,
+    reconnect: 'Połącz ponownie',
+    sudoCommandUnavailable: 'Ten agent nie dostarczył polecenia. Anuluj, jeśli nie możesz go zweryfikować w rozmowie.',
+    sudoInstallDesc: 'Hermes potrzebuje Twojego hasła sudo, aby zainstalować pakiety Bot Screen (TigerVNC + Xfce) na hoście bramki. Są wysyłane wyłącznie do tego hosta.',
+    vaultUnlockSendFailed: 'Nie udało się wysłać hasła głównego',
+    vaultUnlockTitle: name => `Odblokuj ${name}`,
+    vaultUnlockDesc: name =>
+      `Agent chce zalogować się do serwisu loginem zapisanym w ${name}. Wpisz swoje hasło główne, aby odblokować je na tę sesję — trafia wprost do ${name} na tej maszynie i nigdy nie jest zapisywane ani pokazywane agentowi.`,
+    vaultUnlockPlaceholder: 'Hasło główne',
+    vaultUnlockKeepLocked: 'Zostaw zablokowane',
+    vaultUnlockConfirm: 'Odblokuj',
+    vaultSaveSendFailed: 'Nie udało się zapisać loginu',
+    vaultSaveTitle: site => `Zapisać Twój login ${site}?`,
+    vaultSaveDesc: origin =>
+      `Hermes trafił na stronę logowania w ${origin} i nie ma do niej loginu. Wpisz go tu raz; jest szyfrowany na tej maszynie i wpisywany na stronę bez pokazywania hasła modelowi.`,
+    vaultSaveIdentifierLabel: 'E-mail lub nazwa użytkownika',
+    vaultSaveIdentifierPlaceholder: 'ty@example.com',
+    vaultSavePasswordPlaceholder: 'Hasło',
+    vaultSaveFootnote: 'Zarządzaj zapisanymi loginami w Ustawienia → Hasła i logowania.',
+    vaultSaveDecline: 'Nie zapisuj',
+    vaultSaveConfirm: 'Zapisz i zaloguj',
+    vaultCodeSendFailed: 'Nie udało się wysłać kodu',
+    vaultCodeTitle: site => `Kod weryfikacyjny ${site}`,
+    vaultCodeDesc: site =>
+      `${site} prosi o jednorazowy kod (SMS, e-mail lub aplikacja uwierzytelniająca). Wpisz go tutaj, a Hermes wpisze go na stronę; model nigdy go nie zobaczy.`,
+    vaultCodeLabel: 'Kod',
+    vaultCodeFootnote: 'Podpowiedź: zapisz klucz uwierzytelniający razem z tym loginem w Ustawienia → Hasła i logowania, a Hermes będzie sam wpisywał kody.',
+    vaultCodeSkip: 'Pomiń',
+    vaultCodeConfirm: 'Wpisz kod',},
 
   desktop: {
     audioReadFailed: 'Nie można odczytać nagranego dźwięku',
@@ -5369,5 +5438,63 @@ export const pl: Translations = defineLocale({
         label: 'Zewnętrzne',
         long: 'Sięga poza tę aplikację.',
       },
+    },
+  },
+  freeTier: {
+    providerRowTitle: 'Nous · darmowy poziom',
+    providerRowPitch: 'Zaloguj się kontem Nous, aby odblokować więcej modeli i narzędzi.',
+    readyTitle: 'Hermes jest gotowy.',
+    readyCaption: 'Darmowy · konektory w zestawie',
+    begin: 'Zacznij',
+    signInInstead: 'Zamiast tego zaloguj się kontem Nous',
+    otherProviders: 'Inni dostawcy',
+    stripTitle: 'Darmowa inferencja Nous i konektory są już dostępne.',
+    stripBody: 'Otwórz wybór modelu, aby je wypróbować, albo zaloguj się kontem Nous.',
+    openModelPicker: 'Otwórz wybór modelu',
+    dismiss: 'Odrzuć',
+    signIn: 'Zaloguj się',
+    signInHeading: 'Zaloguj się kontem Nous, aby odblokować więcej modeli i narzędzi.',
+    settingUp: 'Konfigurowanie darmowej inferencji...',
+    codeBody: 'Wpisz ten kod w przeglądarce, aby dokończyć logowanie.',
+    copyLink: 'Kopiuj link',
+    doNotShare: 'Nie udostępniaj tego kodu.',
+    waiting: 'Oczekiwanie na logowanie...',
+    finishingHeading: 'Dokańczanie logowania...',
+    finishingBody: 'Zatwierdzono w przeglądarce. Pobieranie tokenów konta.',
+    signedInAs: email => `Zalogowano jako ${email}`,
+    signedIn: 'Zalogowano.',
+    completedBody: 'Twoje konto obsługuje teraz inferencję i narzędzia.',
+    defaultModel: 'Model domyślny',
+    change: 'Zmień',
+    done: 'Gotowe',
+    tryAgain: 'Spróbuj ponownie',
+    startAgain: 'Zacznij od nowa',
+    didNotComplete: 'Logowanie nie dokończone',
+    rejectedBody: 'Bez problemu — nadal korzystasz z darmowej usługi Nous. Zaloguj się, gdy będziesz gotowy/a.',
+    supersededBody: 'Nowszy kod logowania zastąpił ten. Użyj najnowszego albo zacznij od nowa.',
+    timedOutHeading: 'Ten link logowania wygasł',
+    timedOutBody: 'Zacznij od nowa, gdy będziesz gotowy/a. Nadal korzystasz z darmowej usługi Nous.',
+    retiredBody: 'Twoja sesja zakończyła się przed dokończeniem logowania. Hermes rozpocznie nową; zaloguj się ponownie, gdy będziesz gotowy/a.',
+    errorBody: 'Logowanie nie zostało dokończone. Spróbuj ponownie, gdy będziesz gotowy/a.',
+    busyHeading: 'Prawie gotowe',
+    busyBody: wait =>
+      `Hermes nie mógł dokończyć logowania, bo usługa Nous jest zajęta. Spróbuj ponownie za ${wait}. Twoja sesja pozostaje przez ten czas.`,
+    unreachableBody: 'Hermes nie mógł osiągnąć usługi Nous, aby dokończyć logowanie. Sprawdź połączenie z internetem i spróbuj ponownie. Twoja sesja nadal istnieje.',
+    alreadySignedInHeading: 'Już zalogowano.',
+    alreadySignedInBody: 'Ten Hermes jest już zalogowany kontem Nous.',
+    notNow: 'Nie teraz',
+    setupFailed: {
+      gateClosed: 'Ta wersja Hermesa nie może wystartować bez konta Nous. Zaloguj się lub utwórz je — jest darmowe i zajmuje tylko chwilę.',
+      paused: 'Korzystanie z Hermesa bez logowania jest na chwilę wstrzymane. Hermes będzie nadal sprawdzał. Logowanie jest darmowe i uruchomi Cię od razu.',
+      rateLimited: wait =>
+        `Wiele osób teraz startuje, więc Hermes spróbuje ponownie za ${wait}. Logowanie jest darmowe i pomija kolejkę.`,
+      unreachable: 'Hermes nie mógł osiągnąć usługi Nous. Sprawdź połączenie z internetem i stuknij Spróbuj ponownie. Albo podłącz na razie innego dostawcę.',
+      serverError: 'Usługa Nous miała chwilowy problem. Stuknij Spróbuj ponownie za moment albo podłącz na razie innego dostawcę.',
+      powRequired: 'Serwer Nous poprosił o dowód wykonanej pracy, ale Twój Agent jeszcze go nie obsługuje. Zaloguj się lub utwórz darmowe konto Nous, aby kontynuować.',
+      locked: 'Ta sesja nie może kontynuować bez logowania. Zaloguj się lub utwórz darmowe konto Nous, aby iść dalej.',
+      generic: 'Hermes nie mógł przygotować darmowego dostępu bez logowania. Logowanie jest darmowe, albo podłącz innego dostawcę.',
+      signInBelow: 'Logowanie jest darmowe. Wybierz Nous poniżej.',
+      tryAgain: 'Spróbuj ponownie',
+      retrying: 'Ponawianie...',
     },
   },})
