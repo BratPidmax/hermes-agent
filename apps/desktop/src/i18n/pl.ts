@@ -79,7 +79,8 @@ export const pl: Translations = defineLocale({
     tryHint: (term: string) => `Wypróbuj „${term}”`,
     on: 'Włączone',
     off: 'Wyłączone'
-  },
+  ,
+    bots: 'Boty',},
 
   fileMenu: {
     revealFinder: 'Pokaż w Finderze',
@@ -98,7 +99,9 @@ export const pl: Translations = defineLocale({
   ,
     download: 'Pobierz',
     downloadSaved: 'Zapisano',
-    downloadFailed: 'Nie udało się pobrać',},
+    downloadFailed: 'Nie udało się pobrać',
+    revealMissing: 'Ten folder nie znajduje się na tym komputerze',
+    revealUnavailable: 'Ta ścieżka nie znajduje się na tym komputerze — istnieje na maszynie backendu. Użyj \u201EPokaż w drzewie plików\u201E.',},
 
   boot: {
     ready: 'Hermes Desktop jest gotowy',
@@ -438,8 +441,14 @@ export const pl: Translations = defineLocale({
     ,
       "view.toggleTabStrip": 'Przełącz karty',
       "view.showBrowser": 'Otwórz przeglądarkę',
-      "view.selectionToComposer": 'Wyślij zaznaczenie do pola wiadomości',}
-  },
+      "view.selectionToComposer": 'Wyślij zaznaczenie do pola wiadomości',
+      "nav.capabilities": 'Otwórz umiejętności',
+      "composer.dictate": 'Start / stop dyktowania',
+      "view.cycleSidebarGrouping": 'Przełącz grupowanie sesji',
+      "view.toggleProfileRail": 'Pokaż/ukryj pasek profili',
+      "view.toggleSimpleMode": 'Przełącz tryb Prosty',}
+  ,
+    clear: 'Wyczyść',},
 
   findInPage: {
     next: 'Następne dopasowanie',
@@ -3176,7 +3185,11 @@ export const pl: Translations = defineLocale({
         emptyTitle: 'Brak dostępnych blueprints',
         emptyDesc: 'Nie ma dostępnych automatyzacji-blueprints w tym backencie.'
       }
-    },
+    ,
+      lastRunFailed: 'Ostatnie uruchomienie nie powiodło się:',
+      editJob: 'Edytuj zadanie',
+      runAgain: 'Uruchom ponownie',
+      overdueSince: 'Zaległe od:',},
 
   artifacts: {
     search: 'Szukaj artefaktów...',
@@ -4018,7 +4031,7 @@ export const pl: Translations = defineLocale({
     error: 'Błąd',
     hideOutput: 'Ukryj dane wyjściowe instalatora',
     showOutput: 'Pokaż dane wyjściowe instalatora',
-    lines: count => `${count} line${count === 1 ? '' : 's'}`,
+    lines: count => `${count} ${count === 1 ? 'linia' : 'linii'}`,
     noOutput: 'Nie ma jeszcze wyników.',
     cancelling: 'Anulowanie…',
     cancelInstall: 'Anuluj instalację',
@@ -4026,7 +4039,9 @@ export const pl: Translations = defineLocale({
     copiedOutput: 'Skopiowano',
     copyOutput: 'Skopiuj dane wyjściowe',
     reloadRetry: 'Załaduj ponownie i spróbuj ponownie'
-  },
+  ,
+    probeErrorDetails: 'Szczegóły',
+    openLogs: 'Otwórz logi',},
 
   onboarding: {
     headerTitle: 'Skonfigurujmy Hermes Agent',
@@ -4141,7 +4156,9 @@ export const pl: Translations = defineLocale({
     search: 'Wyszukaj modele',
     noAuthenticatedProviders: 'Brak uwierzytelnionych dostawców.',
     addProvider: 'Dodaj dostawcę…'
-  },
+  ,
+    addCustomModel: 'Dodaj własny model',
+    removeCustomModel: 'Usuń własny model',},
 
   shell: {
     windowControls: 'Sterowanie oknem',
@@ -5117,7 +5134,12 @@ export const pl: Translations = defineLocale({
         title: 'Roboczy panel',
         text: 'Pliki, terminal, recenzja i przeglądarka w aplikacji dzielą prawą stronę.'
       }
-    }
+    ,
+      "local-runtime-update": {
+        title: 'Dostępna aktualizacja lokalnego silnika',
+      
+        text: 'Zaktualizuj silnik napędzające Twoje modele lokalne. Aktywne żądania lokalne mogą zostać przerwane.',
+        action: 'Zaktualizuj teraz',},}
   },
 
   errors: {
@@ -5126,7 +5148,9 @@ export const pl: Translations = defineLocale({
     reloadWindow: 'Załaduj ponownie okno',
     openLogs: 'Otwórz logi'
   ,
-    genericFailure: 'Coś poszło nie tak',},
+    genericFailure: 'Coś poszło nie tak',
+    boundaryDetails: 'Szczegóły',
+    sendDiagnostics: 'Wyślij diagnostykę',},
 
   ui: {
     search: {
@@ -5142,7 +5166,7 @@ export const pl: Translations = defineLocale({
     sidebar: {
       title: 'Pasek boczny',
       description: 'Wyświetla mobilny pasek boczny.',
-      toggle: open => `${open ? 'Show' : 'Hide'} sidebar`
+      toggle: open => `${open ? 'Ukryj' : 'Pokaż'} pasek boczny`
     }
   },
 
@@ -5497,4 +5521,39 @@ export const pl: Translations = defineLocale({
       tryAgain: 'Spróbuj ponownie',
       retrying: 'Ponawianie...',
     },
-  },})
+  },
+  intro: {
+    custom: () => [],
+  },
+  modelAssignment: {
+    saveFailed: 'Hermes nie zapisał tej zmiany modelu.',
+  
+    confirmTitle: 'Ostrzeżenie wyboru modelu',
+    confirmDetail: 'Potwierdź tylko wtedy, gdy akceptujesz ten kompromis.',
+    confirmAction: 'Potwierdź',
+    declined: 'Zmiana modelu anulowana — odrzuciłeś/aś ostrzeżenie o poziomie szkolenia na danych.',},
+  handoffTour: {
+    profileTitle: 'Pierwsze zadanie działa na profilu domyślnym',
+  
+    profileText: 'Ten pasek przełącza profile. Podświetlony teraz to default, w którym działa sesja zadania. Drugi to profil konfiguracyjny, w którym żyje czat powitalny.',
+    sessionsTitle: 'Każdy profil ma własne sesje',
+    sessionsText: 'Ta lista należy do profilu domyślnego. Nowa sesja uruchamia się w profilu aktualnie wybranym. Przełącz profil na pasku, a lista zmieni się razem z nim.',
+    stayTitle: 'Hermes jest o jedno kliknięcie',
+    stayText: 'Przejdź na profil konfiguracyjny i otwórz Welcome to Hermes, kiedykolwiek będziesz potrzebować pomocy. On tam na Ciebie czeka.',},
+  guidedGreeting: {
+    line: 'Cześć, witam! Jestem Hermes. Daj mi dwie minuty, rozejrzę się po Twoim otoczeniu, a potem zabierzemy się do czegoś, co naprawdę chcesz zrobić.\n\nNajpierw jednak — jak mam się do Ciebie zwracać?',
+  
+    nameSuggestion: (name: string) => `(Mogę też mówić do Ciebie ${name}, jeśli wolisz.)`,},
+  interfaceMode: {
+    title: 'Tryb interfejsu',
+  
+    hint: 'Zmienia to, co widać, a nie to, co Hermes potrafi.',
+    sessionNote: 'Ustawione przez tryb Prosty. Zmiana tutaj obowiązuje tę sesję; przełącz na Rozbudowany, aby utrwalić ją na stałe.',
+    simple: {
+      label: 'Prosty',
+    
+      description: 'Do rozmawiania z Hermesem. Pasek boczny i czat; bez terminala, plików i paneli różnic.',},
+    advanced: {
+      label: 'Rozbudowany',
+    
+      description: 'Dla programistów. Terminal, pliki, różnice, pasek stanu i układy, ustawione po Twojemu.',},},})
