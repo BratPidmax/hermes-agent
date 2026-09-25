@@ -3862,6 +3862,34 @@ export const pl: Translations = defineLocale({
     },},
 
   updates: {
+    discontinuedTitle: 'Ta wersja Hermes nie jest już wspierana',
+    discontinuedBody:
+      'Ta wersja Hermes nie jest już wspierana i może ulec awarii — odinstaluj ją. Twoje dane pozostają na dysku.',
+    channels: { stable: 'Stabilny', canary: 'Canary' },
+    availableBodyAppInstaller:
+      'Nowa wersja Hermes jest gotowa. Hermes się zamknie, Windows dokończy aktualizację, a Hermes uruchomi się ponownie sam.',
+    applyingBodyAppInstaller:
+      'Hermes się zamknie, a Windows dokończy aktualizację. Hermes uruchomi się ponownie po zakończeniu — nie musisz nic robić.',
+    checkUnknownTitleAppInstaller: 'Nie udało się sprawdzić aktualizacji',
+    checkUnknownBodyAppInstaller:
+      'Windows nie mógł teraz sprawdzić aktualizacji. Aktualizacje instalują się też automatycznie przy ponownym uruchomieniu Hermesa.',
+    availableBodyRelease: tag => `Wersja ${tag} jest gotowa do instalacji.`,
+    checkingShort: 'Sprawdzanie...',
+    versionDetailsVersion: 'Wersja',
+    versionDetailsBuildOrigin: 'Źródło builda',
+    versionDetailsDistribution: 'Dystrybucja',
+    versionDetailsDistributionDesktop: 'Aplikacja desktopowa',
+    versionDetailsDistributionDesktopMsix: 'Aplikacja desktopowa (MSIX)',
+    versionDetailsDistributionDesktopInstaller: 'Aplikacja desktopowa (instalator)',
+    versionDetailsDistributionSourceInstaller: 'Źródło (skrypt instalacyjny)',
+    versionDetailsDistributionSourceInstallerDesktop: 'Źródło (skrypt instalacyjny) + Hermes Desktop',
+    versionDetailsDistributionSource: 'Źródło',
+    versionDetailsDistributionSourceDesktop: 'Źródło + Hermes Desktop',
+    versionDetailsRuntime: 'Środowisko uruchomieniowe',
+    versionDetailsRuntimeEmbedded: 'Zintegrowane środowisko uruchomieniowe',
+    versionDetailsRuntimeExternal: 'Zewnętrzne (używa środowiska systemowego)',
+    versionDetailsInstallId: 'Identyfikator instalacji',
+    versionDetailsUncommittedChanges: 'niezatwierdzone zmiany',
     version: value => `Wersja ${value}`,
     versionUnavailable: 'Wersja niedostępna',
     bundleOutOfSync: 'Wersja aplikacji nieaktualna',
@@ -4240,6 +4268,9 @@ export const pl: Translations = defineLocale({
       offDescription: 'Uruchamiaj bez pytań o zatwierdzenie'
     },
     statusbar: {
+      releaseAvailable: tag => `Wersja ${tag} jest dostępna.`,
+      focusedSince: 'Czas fokusu',
+      focusedSinceTitle: 'Czas od ustawienia fokusu na tym czacie — nie czas trwania zadania.',
       unknown: 'nieznany',
       restart: 'uruchom ponownie',
       update: 'aktualizacja',
