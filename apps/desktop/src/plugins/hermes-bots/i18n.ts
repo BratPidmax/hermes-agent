@@ -138,7 +138,8 @@ type BotsMessages = {
     retryNow: string
     rosterUnavailable: (reason: string) => string
     waitingForGateway: string
-  }
+  ,
+    allGateways: string;}
   /** User-made roster sections (folders the user files bots into). */
   sections: {
     newSection: string
@@ -216,7 +217,9 @@ type BotsMessages = {
     chatEmpty: string
     /** First line of a brand-new bot's forever-chat — see `kickoffText`. */
     kickoff: string
-  }
+  ,
+    openRecentSession: string;
+    exampleTitle: string;}
   /** Avatar picker: shapes, blobs, pets, uploads, generation. */
   avatar: {
     classicShapes: string
@@ -241,7 +244,8 @@ type BotsMessages = {
     savedLocallyDescriptionFailed: string
     generate: string
     generating: string
-  }
+  ,
+    noPetsMatch: string;}
   /** Group chats: the room, its composer, threads and activity feed. */
   group: {
     newTitle: string
@@ -321,7 +325,15 @@ type BotsMessages = {
     wantsToRunCommand: (handle: string) => string
     asks: (handle: string) => string
     answerTo: (member: string) => string
-  }
+  ,
+    openChat: string;
+    membersTitle: string;
+    membersDesc: (group: string, max: number) => string;
+    manageMembersCount: (count: number) => string;
+    cancel: string;
+    saveMembers: string;
+    membersTip: string;
+    membersAria: string;}
   /** Skills hub + MCP setup surfaces embedded in the bot editor. */
   tools: {
     installHint: (name: string) => string
@@ -578,7 +590,8 @@ const en: BotsMessages = {
       `Roster unavailable: ${reason}. If your gateway predates profiles.list, update Hermes and restart the gateway.`,
     waitingForGateway:
       'Waiting for the gateway connection… (remote gateways can take a few seconds; retries automatically)'
-  },
+  ,
+    allGateways: 'All gateways',},
   sections: {
     newSection: 'New section',
     newTitle: 'New section',
@@ -649,7 +662,9 @@ const en: BotsMessages = {
     openGateways: 'Open Gateways',
     chatEmpty: 'Say something to get started.',
     kickoff: 'Hey, tell me about yourself!'
-  },
+  ,
+    openRecentSession: 'Open recent session',
+    exampleTitle: 'Inbox Triage',},
   avatar: {
     classicShapes: 'Classic shapes',
     blobFromName: 'Blob face — drawn from the bot’s name',
@@ -672,7 +687,8 @@ const en: BotsMessages = {
     savedLocallyDescriptionFailed: 'Saved look locally; description update failed',
     generate: 'Generate',
     generating: 'Generating…'
-  },
+  ,
+    noPetsMatch: 'No pets match.',},
   group: {
     newTitle: 'New group chat',
     manageDesc: 'A bot can join multiple group chats. Memberships sync to every machine.',
@@ -752,7 +768,15 @@ const en: BotsMessages = {
     wantsToRunCommand: handle => `@${handle} wants to run a command:`,
     asks: handle => `@${handle} asks:`,
     answerTo: member => `Answer @${member}`
-  },
+  ,
+    openChat: 'Open Group Chat',
+    membersTitle: 'Manage members',
+    membersDesc: (group: string, max: number) => `Pick 2–${max} bots for “${group}”. The room, its history and its member sessions stay as they are.`,
+    manageMembersCount: (count: number) => `Manage members (${count})...`,
+    cancel: 'Cancel',
+    saveMembers: 'Save members',
+    membersTip: 'Manage members',
+    membersAria: 'Manage group members',},
   tools: {
     installHint: name => `Install "${name}" and add it to the list above`,
     installed: name => `Skill "${name}" installed`,
@@ -1003,7 +1027,8 @@ const ja: BotsMessages = {
     rosterUnavailable: reason =>
       `名簿を取得できません: ${reason}。ゲートウェイが profiles.list より前の場合は、Hermes を更新してゲートウェイを再起動してください。`,
     waitingForGateway: 'ゲートウェイ接続を待っています…（リモートは数秒かかることがあります。自動で再試行します）'
-  },
+  ,
+    allGateways: 'すべてのゲートウェイ',},
   sections: {
     newSection: '新しいセクション',
     newTitle: '新しいセクション',
@@ -1074,7 +1099,9 @@ const ja: BotsMessages = {
     openGateways: 'ゲートウェイを開く',
     chatEmpty: '何か書いて始めましょう。',
     kickoff: 'こんにちは、自己紹介をしてください！'
-  },
+  ,
+    openRecentSession: '最近のセッションを開く',
+    exampleTitle: '受信トリアージ',},
   avatar: {
     classicShapes: 'クラシックシェイプ',
     blobFromName: 'ブロブ顔 — ボットの名前から描画',
@@ -1097,7 +1124,8 @@ const ja: BotsMessages = {
     savedLocallyDescriptionFailed: '見た目はローカルに保存されましたが、説明の更新に失敗しました',
     generate: '生成',
     generating: '生成中…'
-  },
+  ,
+    noPetsMatch: '一致するペットがありません。',},
   group: {
     newTitle: '新しいグループチャット',
     manageDesc: 'ボットは複数のグループチャットに参加できます。メンバーシップはすべてのマシンに同期されます。',
@@ -1177,7 +1205,15 @@ const ja: BotsMessages = {
     wantsToRunCommand: handle => `@${handle}がコマンドを実行しようとしています:`,
     asks: handle => `@${handle}からの質問:`,
     answerTo: member => `@${member}に回答`
-  },
+  ,
+    openChat: 'グループチャットを開く',
+    membersTitle: 'メンバー管理',
+    membersDesc: (group, max) => `「${group}」に2〜${max}体のボットを選択してください。ルーム、履歴、メンバーセッションはそのまま維持されます。`,
+    manageMembersCount: count => `メンバー管理 (${count})...`,
+    cancel: 'キャンセル',
+    saveMembers: 'メンバーを保存',
+    membersTip: 'メンバー管理',
+    membersAria: 'グループメンバーを管理',},
   tools: {
     installHint: name => `「${name}」をインストールして上の一覧に追加`,
     installed: name => `スキル「${name}」をインストールしました`,
@@ -1425,7 +1461,8 @@ const zh: BotsMessages = {
     retryNow: '立即重试',
     rosterUnavailable: reason => `无法获取名单：${reason}。如果网关早于 profiles.list，请更新 Hermes 并重启网关。`,
     waitingForGateway: '正在等待网关连接…（远程网关可能需要几秒；会自动重试）'
-  },
+  ,
+    allGateways: '所有网关',},
   sections: {
     newSection: '新建分区',
     newTitle: '新建分区',
@@ -1493,7 +1530,9 @@ const zh: BotsMessages = {
     openGateways: '打开网关',
     chatEmpty: '说点什么开始吧。',
     kickoff: '你好，介绍一下你自己吧！'
-  },
+  ,
+    openRecentSession: '打开最近会话',
+    exampleTitle: '收件箱分流',},
   avatar: {
     classicShapes: '经典形状',
     blobFromName: '斑点脸 — 根据机器人名称绘制',
@@ -1516,7 +1555,8 @@ const zh: BotsMessages = {
     savedLocallyDescriptionFailed: '外观已保存在本地；描述更新失败',
     generate: '生成',
     generating: '生成中…'
-  },
+  ,
+    noPetsMatch: '没有匹配的宠物。',},
   group: {
     newTitle: '新建群聊',
     manageDesc: '一个机器人可以加入多个群聊。成员关系会同步到每台设备。',
@@ -1593,7 +1633,15 @@ const zh: BotsMessages = {
     wantsToRunCommand: handle => `@${handle} 想执行一个命令：`,
     asks: handle => `@${handle} 的提问：`,
     answerTo: member => `回答 @${member}`
-  },
+  ,
+    openChat: '打开群聊',
+    membersTitle: '管理成员',
+    membersDesc: (group, max) => `为“${group}”选择 2–${max} 个机器人。房间、历史记录和成员会话保持不变。`,
+    manageMembersCount: count => `管理成员 (${count})...`,
+    cancel: '取消',
+    saveMembers: '保存成员',
+    membersTip: '管理成员',
+    membersAria: '管理群组成员',},
   tools: {
     installHint: name => `安装“${name}”并添加到上方列表`,
     installed: name => `技能“${name}”已安装`,
@@ -1838,7 +1886,8 @@ const zhHant: BotsMessages = {
     retryNow: '立即重試',
     rosterUnavailable: reason => `無法取得名單：${reason}。如果閘道早於 profiles.list，請更新 Hermes 並重新啟動閘道。`,
     waitingForGateway: '正在等待閘道連線…（遠端閘道可能需要幾秒；會自動重試）'
-  },
+  ,
+    allGateways: '所有閘道',},
   sections: {
     newSection: '新增分區',
     newTitle: '新增分區',
@@ -1906,7 +1955,9 @@ const zhHant: BotsMessages = {
     openGateways: '開啟閘道',
     chatEmpty: '說點什麼開始吧。',
     kickoff: '你好，介紹一下你自己吧！'
-  },
+  ,
+    openRecentSession: '開啟最近會話',
+    exampleTitle: '收件匣分流',},
   avatar: {
     classicShapes: '經典形狀',
     blobFromName: '斑點臉 — 依機器人名稱繪製',
@@ -1929,7 +1980,8 @@ const zhHant: BotsMessages = {
     savedLocallyDescriptionFailed: '外觀已儲存在本機；描述更新失敗',
     generate: '生成',
     generating: '生成中…'
-  },
+  ,
+    noPetsMatch: '沒有符合的寵物。',},
   group: {
     newTitle: '新增群組聊天',
     manageDesc: '一個機器人可以加入多個群組聊天。成員關係會同步到每台裝置。',
@@ -2006,7 +2058,15 @@ const zhHant: BotsMessages = {
     wantsToRunCommand: handle => `@${handle} 想執行一個命令：`,
     asks: handle => `@${handle} 的提問：`,
     answerTo: member => `回覆 @${member}`
-  },
+  ,
+    openChat: '開啟群組聊天',
+    membersTitle: '管理成員',
+    membersDesc: (group, max) => `為「${group}」選擇 2–${max} 個機器人。房間、歷史記錄與成員會話保持不變。`,
+    manageMembersCount: count => `管理成員 (${count})...`,
+    cancel: '取消',
+    saveMembers: '儲存成員',
+    membersTip: '管理成員',
+    membersAria: '管理群組成員',},
   tools: {
     installHint: name => `安裝「${name}」並新增至上方清單`,
     installed: name => `技能「${name}」已安裝`,

@@ -127,6 +127,7 @@ const TOOL_PAYLOAD_PRE_CLASS = cn(TOOL_SECTION_SURFACE_CLASS, 'font-mono text-[0
  * nothing else here.
  */
 function ToolPayloadDisclosure({ args, result }: { args: unknown; result: unknown }) {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
 
   return (
@@ -142,7 +143,7 @@ function ToolPayloadDisclosure({ args, result }: { args: unknown; result: unknow
         type="button"
       >
         <DisclosureCaret className="text-(--ui-text-tertiary)" open={open} size="0.625rem" />
-        Tool payload
+        {t.assistant.thread.toolPayload}
       </button>
       {open && (
         <pre className={cn(TOOL_PAYLOAD_PRE_CLASS, 'mt-1 whitespace-pre-wrap wrap-anywhere')}>
@@ -658,7 +659,7 @@ function ToolEntry({ part }: ToolEntryProps) {
             <div className="max-w-full text-xs leading-relaxed text-(--ui-text-secondary)">
               {view.searchQuery && (
                 <p className="mb-1 flex min-w-0 gap-1.5 wrap-anywhere">
-                  <span className="shrink-0 font-medium text-(--ui-text-tertiary)">Search</span>
+                  <span className="shrink-0 font-medium text-(--ui-text-tertiary)">{copy.searchLabel}</span>
                   <span>{view.searchQuery}</span>
                 </p>
               )}

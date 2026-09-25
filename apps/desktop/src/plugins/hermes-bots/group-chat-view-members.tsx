@@ -26,6 +26,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { $botMeta, $lastRoster, botHandle, botRosterKey, saveBotMeta } from './data'
 import { $groupChats, GROUP_CHAT_MAX_MEMBERS, updateGroupChat } from './group-chat'
 import type { GroupChatRoom } from './group-chat'
+import { useBots } from './i18n'
 import {
   botGroups,
   durableGroupChatMembers,
@@ -135,6 +136,7 @@ interface GroupMemberPickerProps {
  *  checklist, pre-checked with the room's current seats. Nothing is written
  *  until Save; Cancel leaves membership untouched. */
 export function GroupMemberPicker({ group, members, open, onClose }: GroupMemberPickerProps) {
+  const b = useBots()
   const allMeta: Record<string, BotMeta> = useValue($botMeta)
   const liveRoster: RosterRow[] = useValue($lastRoster)
 
@@ -179,8 +181,8 @@ export function GroupMemberPicker({ group, members, open, onClose }: GroupMember
     <Dialog onOpenChange={value => !value && onClose()} open={open}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Manage members</DialogTitle>
-          <DialogDescription>{`Pick 2–${GROUP_CHAT_MAX_MEMBERS} bots for “${group}”. The room, its history and its member sessions stay as they are.`}</DialogDescription>
+          <DialogTitle>{b.group.membersTitle}</DialogTitle>
+          <DialogDescription>{b.group.membersDesc(group, GROUP_CHAT_MAX_MEMBERS)}</DialogDescription>
         </DialogHeader>
         <div className="grid max-h-80 gap-0.5 overflow-y-auto" data-testid="group-member-picker">
           {roster.map(bot => {
@@ -229,10 +231,10 @@ export function GroupMemberPicker({ group, members, open, onClose }: GroupMember
         </div>
         <DialogFooter>
           <Button onClick={onClose} variant="secondary">
-            Cancel
+            {b.group.cancel}
           </Button>
           <Button disabled={selected.size < 2 || selected.size > GROUP_CHAT_MAX_MEMBERS} onClick={() => void save()}>
-            Save members
+            {b.group.saveMembers}
           </Button>
         </DialogFooter>
       </DialogContent>

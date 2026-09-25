@@ -17,6 +17,7 @@ import { TranscriptVideo } from '@/components/chat/transcript-video'
 import { ZoomableImage } from '@/components/chat/zoomable-image'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { useMediaImage } from '@/hooks/use-media-image'
+import { useI18n } from '@/i18n'
 import { detectArtifact } from '@/lib/artifact-detect'
 import { renderMediaTags } from '@/lib/chat-messages/parts'
 import { normalizeExternalUrl, openExternalLink, PrettyLink } from '@/lib/external-link'
@@ -126,14 +127,18 @@ function useOpenMediaFile(path: string) {
 }
 
 function OpenMediaFailedNote({ name }: { name: string }) {
+  const { t } = useI18n()
+
   return (
     <span className="mt-1 block text-xs text-muted-foreground">
-      Couldn&apos;t fetch {name} from the gateway (missing, unreadable, or too large).
+      {t.assistant.thread.couldNotFetchMedia(name)}
     </span>
   )
 }
 
 function OpenMediaButton({ kind, path }: { kind: 'audio' | 'video'; path: string }) {
+  const { t } = useI18n()
+  const copy = t.assistant.thread
   const { open, openFailed } = useOpenMediaFile(path)
 
   return (
@@ -143,7 +148,7 @@ function OpenMediaButton({ kind, path }: { kind: 'audio' | 'video'; path: string
         onClick={open}
         type="button"
       >
-        Open {kind} file
+        {copy.openMediaFile(kind === 'audio' ? copy.audioKind : copy.videoKind)}
       </button>
       {openFailed && <OpenMediaFailedNote name={mediaName(path)} />}
     </span>
@@ -392,6 +397,8 @@ function MarkdownImageContent({
   style,
   ...props
 }: ComponentProps<'img'>) {
+  const { t } = useI18n()
+  const copy = t.assistant.thread
   const rawSrc = typeof src === 'string' ? src : ''
   const image = useMediaImage(rawSrc, COLD_IMAGE_RATIO, validImageDimensions(width, height))
   const { open, openFailed } = useOpenMediaFile(rawSrc)
@@ -406,9 +413,9 @@ function MarkdownImageContent({
   if (image.failed) {
     return (
       <span className="my-2 block text-sm text-muted-foreground" data-slot="aui_markdown-image">
-        Couldn&apos;t load {name}.{' '}
+        {copy.imageLoadFailed(name)}{' '}
         <button className="ref font-medium text-foreground" onClick={open} type="button">
-          Open image
+          {t.desktop.openImage}
         </button>
         {openFailed && <OpenMediaFailedNote name={name} />}
       </span>
@@ -450,7 +457,7 @@ function MarkdownImageContent({
         />
       ) : (
         <span className={cn('block overflow-hidden text-sm text-muted-foreground', framed && 'absolute inset-0')}>
-          Loading {name}...
+          {copy.mediaLoading(name)}
         </span>
       )}
     </span>

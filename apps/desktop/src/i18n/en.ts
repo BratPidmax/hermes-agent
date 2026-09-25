@@ -355,7 +355,8 @@ export const en: Translations = {
     update: 'Update',
     tryHint: term => `Try “${term}”`,
     on: 'On',
-    off: 'Off'
+    off: 'Off',
+    saveChanges: 'Save changes',
   },
 
   fileMenu: {
@@ -1187,7 +1188,8 @@ export const en: Translations = {
         noneAvailable: 'No pets available to turn on right now.',
         turnOnFailed: 'Could not turn the pet on.',
         turnOffFailed: 'Could not turn the pet off.'
-      }
+      },
+      marketplaceFrom: 'From the VS Code Marketplace',
     },
     fieldLabels: FIELD_LABELS,
     fieldDescriptions: FIELD_DESCRIPTIONS,
@@ -2573,7 +2575,14 @@ export const en: Translations = {
     importEmpty: 'Paste a map code to load it.',
     importSuccess: nodes => `Loaded a map with ${nodes} ${nodes === 1 ? 'node' : 'nodes'}.`,
     importedBadge: 'imported map',
-    resetToMine: 'Back to my map'
+    resetToMine: 'Back to my map',
+    editNode: 'Edit',
+    timelineScrubber: 'Timeline scrubber',
+    archiveSkill: 'Archive skill',
+    deleteMemory: 'Delete memory',
+    deleteConfirmLabel: 'Delete',
+    deleteDescription: 'This memory is removed permanently.',
+    deleteTitle: (label: string) => `Delete ${label}?`,
   },
   agents: {
     extendedTranscript: 'Extended transcript',
@@ -2680,7 +2689,14 @@ export const en: Translations = {
       referenceImageTooLarge: 'Reference image is too large. Use one under 16 MB.',
       referenceImageInvalid: 'Could not read that reference image. Try a PNG, JPG, WebP, or GIF.',
       adopt: 'Adopt',
-      startOver: 'Start over'
+      startOver: 'Start over',
+      unavailableHeadline: 'Add an image backend to generate',
+      unavailableBody: 'Hatching a custom pet needs a provider that can ground on a reference image.',
+      setupButton: 'Set up image generation',
+      grabKeyFrom: 'Grab a key from',
+      addReference: 'Add a reference',
+      removeReference: 'Remove reference',
+      hatchProgress: 'Hatching progress',
     },
     installTheme: {
       title: 'Install theme…',
@@ -4222,6 +4238,23 @@ export const en: Translations = {
     openLogs: 'Open logs'
   },
 
+  onboardingChat: {
+    skipSetup: 'Skip setup',
+    skipThis: 'Skip this',
+    fallbackOption: "Let's figure it out together",
+    nothingConnects: 'Nothing connects or installs yet.',
+    nothingConnectsRest: 'Hermes will offer to link these, or install a plugin, when a task needs them, and asks first.',
+    buildStartFailed: 'The first build could not be started. Retry to check its session.',
+    buildStarted: (title: string) => `${title} was started — find it in your sessions`,
+    buildOpening: (title: string) => `Opening ${title}...`,
+    retryFirstBuild: 'Retry first build'
+  },
+  sessionTile: {
+    openFailed: "Couldn't open this session"
+  },
+  memorySetup: {
+    browserConsent: 'Waiting for browser consent...'
+  },
   onboarding: {
     headerTitle: "Let's get you setup with Hermes Agent",
     headerDesc: 'Connect a model provider to start chatting. Most options take one click.',
@@ -4560,7 +4593,11 @@ export const en: Translations = {
       modelPinned: 'pinned by you; new chats use this instead of the Settings default',
       modelTitle: (provider, model) => `Model · ${provider}: ${model}`,
       providerModelTitle: (provider, model) => `${provider} · ${model}`
-    }
+    },
+    minimizeWindow: 'Minimize window',
+    maximizeWindow: 'Maximize window',
+    restoreWindow: 'Restore window',
+    closeWindow: 'Close window',
   },
 
   rightSidebar: {
@@ -5039,7 +5076,24 @@ export const en: Translations = {
       restoreNext: 'Restore next checkpoint',
       goForward: 'Go forward',
       sendEdited: 'Send edited message',
-      attachingFile: 'Attaching…'
+      attachingFile: 'Attaching…',
+      couldNotFetchMedia: (name: string) => `Couldn't fetch ${name} from the gateway (missing, unreadable, or too large).`,
+      openMediaFile: (kind: string) => `Open ${kind} file`,
+      audioKind: 'audio',
+      videoKind: 'video',
+      mediaLoading: (name: string) => `Loading ${name}...`,
+      imageLoadFailed: (name: string) => `Couldn't load ${name}.`,
+      messageFrom: (sender: string) => `Message from ${sender}`,
+      repliedTo: (sender: string) => `Replied to ${sender}`,
+      showMessage: 'show message',
+      showReply: 'show reply',
+      searchEmoji: 'Search...',
+      loadingEmoji: 'Loading emoji...',
+      noEmojiFound: 'No emoji found.',
+      moreEmoji: 'More emoji',
+      reactedBy: (author: string) => `Reacted by ${author}`,
+      conversationTimeline: 'Conversation timeline',
+      toolPayload: 'Tool payload',
     },
     approval: {
       gatewayDisconnected:
@@ -5217,8 +5271,10 @@ export const en: Translations = {
         web_extract: { done: 'Read webpage', pending: 'Reading webpage', pendingAction: 'Reading' },
         web_search: { done: 'Searched web', pending: 'Searching web', pendingAction: 'Searching' },
         write_file: { done: 'Edited file', pending: 'Editing file', pendingAction: 'Editing' }
-      }
-    }
+      },
+      searchLabel: 'Search',
+    },
+    embedLoadFailed: (label: string) => `Failed to load ${label} embed`,
   },
 
   prompts: {

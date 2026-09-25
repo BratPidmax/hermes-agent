@@ -2,6 +2,7 @@ import { EmojiPicker } from 'frimousse'
 import { type FC, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useI18n } from '@/i18n'
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover'
 import { triggerHaptic } from '@/lib/haptics'
 import { Plus } from '@/lib/icons'
@@ -31,26 +32,30 @@ const CELL_TINTS = [
 const cellTint = (emoji: string) => CELL_TINTS[(emoji.codePointAt(0) ?? 0) % CELL_TINTS.length]
 
 /** The full emoji picker, revealed behind the quick row's "+". Headless — styled here. */
-const FullEmojiPicker: FC<{ onSelect: (emoji: string) => void }> = ({ onSelect }) => (
-  <EmojiPicker.Root
-    className="flex h-72 w-76 flex-col"
-    emojibaseUrl={EMOJIBASE_URL}
-    onEmojiSelect={emoji => onSelect(emoji.emoji)}
-  >
+const FullEmojiPicker: FC<{ onSelect: (emoji: string) => void }> = ({ onSelect }) => {
+  const { t } = useI18n()
+  const copy = t.assistant.thread
+
+  return (
+    <EmojiPicker.Root
+      className="flex h-72 w-76 flex-col"
+      emojibaseUrl={EMOJIBASE_URL}
+      onEmojiSelect={emoji => onSelect(emoji.emoji)}
+    >
     {/* Borderless, underline-on-focus — the app's SearchField idiom (DESIGN.md),
         not a boxed search bar. Search matches labels AND emojibase tags
         ("lol" → 😂), which frimousse handles natively. */}
     <EmojiPicker.Search
       autoFocus
       className="mx-1 border-b border-(--ui-stroke-tertiary) bg-transparent px-1 pb-1 text-sm outline-hidden focus:border-(--ui-stroke-secondary)"
-      placeholder="Search…"
+      placeholder={copy.searchEmoji}
     />
     <EmojiPicker.Viewport className="relative flex-1 outline-hidden">
       <EmojiPicker.Loading className="absolute inset-0 grid place-items-center text-xs text-(--ui-text-tertiary)">
-        Loading emoji…
+        {copy.loadingEmoji}
       </EmojiPicker.Loading>
       <EmojiPicker.Empty className="absolute inset-0 grid place-items-center text-xs text-(--ui-text-tertiary)">
-        No emoji found.
+        {copy.noEmojiFound}
       </EmojiPicker.Empty>
       <EmojiPicker.List
         className="select-none pb-1"
@@ -79,8 +84,9 @@ const FullEmojiPicker: FC<{ onSelect: (emoji: string) => void }> = ({ onSelect }
         }}
       />
     </EmojiPicker.Viewport>
-  </EmojiPicker.Root>
-)
+    </EmojiPicker.Root>
+  )
+}
 
 /**
  * The reaction picker — six quick emoji, then "+" for the full set.
@@ -97,6 +103,7 @@ export const ReactionPicker: FC<{
   open: boolean
   selected?: string
 }> = ({ align = 'end', children, onOpenChange, onSelect, open, selected }) => {
+  const { t } = useI18n()
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -141,7 +148,7 @@ export const ReactionPicker: FC<{
                 {emoji}
               </Button>
             ))}
-            <Button aria-label="More emoji" onClick={() => setExpanded(true)} size="icon-sm" variant="ghost">
+            <Button aria-label={t.assistant.thread.moreEmoji} onClick={() => setExpanded(true)} size="icon-sm" variant="ghost">
               <Plus />
             </Button>
           </>
@@ -164,6 +171,8 @@ export const ReactionBadge: FC<{
   onRetract?: () => void
   reactions: MessageReaction[]
 }> = ({ className, onRetract, reactions }) => {
+  const { t } = useI18n()
+
   if (!reactions.length) {
     return null
   }
@@ -197,7 +206,7 @@ export const ReactionBadge: FC<{
           <span
             className="reaction-pop leading-none"
             key={`${reaction.author}-${reaction.emoji}`}
-            title="Reacted by Hermes"
+            title={t.assistant.thread.reactedBy('Hermes')}
           >
             {reaction.emoji}
           </span>

@@ -314,7 +314,7 @@ const ActiveThreadTimeline: FC = () => {
 
   return (
     <div
-      aria-label="Conversation timeline"
+      aria-label={t.assistant.thread.conversationTimeline}
       data-slot="thread-timeline"
       data-suppress-pane-reveal=""
       ref={root}

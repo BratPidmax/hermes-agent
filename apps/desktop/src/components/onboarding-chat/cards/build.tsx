@@ -14,6 +14,7 @@ import { quarantineHandoffReceipt } from '@/app/contrib/handoff-receipt'
 import { resolveSessionOwner } from '@/app/session/hooks/use-session-actions/utils'
 import type { CardProps } from '@/components/onboarding-chat/cards/frame'
 import { Chip } from '@/components/onboarding-chat/chip'
+import { useI18n } from '@/i18n'
 import { readPersistedHandoff } from '@/components/onboarding-chat/persisted-handoff'
 import {
   $handoffError,
@@ -37,7 +38,6 @@ import { isSessionOwnerRoute } from '@/store/session-request-router'
 
 /** A tapped option is submitted as the user's own visible message rather than as a hidden [setup] note, so the
  *  model's next message answers a real turn. */
-const FALLBACK_OPTION = "Let's figure it out together"
 
 /**
  * The last question card before the handoff. The model asks what the user wants to build first, then places this card
@@ -45,6 +45,7 @@ const FALLBACK_OPTION = "Let's figure it out together"
  * `::onboarding{step="first" options="Find emails I need to reply to|Plan my day around meetings|…"}`.
  */
 export function FirstBuildCard({ attrs, locked }: CardProps) {
+  const { t } = useI18n()
   const view = useSessionView()
   const storedId = useStore(view.$storedId)
   const target = view.kind === 'tile' ? `tile:${storedId}` : 'main'
@@ -64,7 +65,7 @@ export function FirstBuildCard({ attrs, locked }: CardProps) {
   const picked = committed ?? (answeredInComposer ? '' : null)
 
   // The 60-character limit keeps an option on one chip. The dedupe is case-insensitive because models repeat
-  // themselves. Fewer than 2 usable options falls back to FALLBACK_OPTION, because the model's prose has already
+  // themselves. Fewer than 2 usable options falls back to the fallback option, because the model's prose has already
   // told the user to pick one below.
   const seen = new Set<string>()
 
@@ -84,7 +85,7 @@ export function FirstBuildCard({ attrs, locked }: CardProps) {
     })
     .slice(0, 4)
 
-  const options = parsed.length < 2 ? [FALLBACK_OPTION] : parsed
+  const options = parsed.length < 2 ? [t.onboardingChat.fallbackOption] : parsed
 
   const pick = (option: string) => {
     if (picked !== null || locked) {
@@ -117,6 +118,7 @@ export function FirstBuildCard({ attrs, locked }: CardProps) {
  * and a locked (replayed) transcript never starts one.
  */
 export function HandoffCard({ attrs, locked }: CardProps) {
+  const { t } = useI18n()
   const view = useSessionView()
   const storedId = useStore(view.$storedId)
   const runtimeId = useStore(view.$runtimeId)
@@ -228,14 +230,14 @@ export function HandoffCard({ attrs, locked }: CardProps) {
       <StatusDot live={!settled && !failed} />
       <span className="text-(--ui-text-secondary)">
         {failed
-          ? (error ?? 'The first build could not be started. Retry to check its session.')
+          ? (error ?? t.onboardingChat.buildStartFailed)
           : settled
-            ? `${title} was started — find it in your sessions`
-            : `Opening ${title}\u2026`}
+            ? t.onboardingChat.buildStarted(title)
+            : t.onboardingChat.buildOpening(title)}
       </span>
       {state?.phase === 'error' && (
         <Button disabled={locked} onClick={() => void retry()} size="sm" variant="text">
-          Retry first build
+          {t.onboardingChat.retryFirstBuild}
         </Button>
       )}
     </div>

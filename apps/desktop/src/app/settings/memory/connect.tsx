@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useI18n } from '@/i18n'
 import { getMemoryProviderOAuthStatus, startMemoryProviderOAuth } from '@/hermes'
 import { Check, ExternalLink, Loader2 } from '@/lib/icons'
 import { notifyError } from '@/store/notifications'
@@ -13,6 +14,7 @@ const POLL_TIMEOUT_MS = 120_000
 // backend-driven: the status route 404s for providers without an oauth_flow
 // module, so non-OAuth providers render nothing.
 export function MemoryConnect({ profile, provider }: { profile?: string; provider: string }) {
+  const { t } = useI18n()
   const [capable, setCapable] = useState<'no' | 'unknown' | 'yes'>('unknown')
   const [connected, setConnected] = useState(false)
   const [auth, setAuth] = useState<MemoryProviderOAuthStatus['auth']>(null)
@@ -138,10 +140,10 @@ export function MemoryConnect({ profile, provider }: { profile?: string; provide
         <>
           <span className="inline-flex items-center gap-1.5 text-muted-foreground">
             <Loader2 className="size-3 animate-spin" />
-            Waiting for browser consent…
+            {t.memorySetup.browserConsent}
           </span>
           <Button className="h-auto p-0 text-xs" onClick={cancel} size="sm" type="button" variant="link">
-            Cancel
+            {t.common.cancel}
           </Button>
         </>
       ) : (

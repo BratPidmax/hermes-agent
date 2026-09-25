@@ -1,6 +1,7 @@
 import type { CSSProperties, PointerEvent } from 'react'
 
 import { Codicon } from '@/components/ui/codicon'
+import { useI18n } from '@/i18n'
 import { cn } from '@/lib/utils'
 
 import { TITLEBAR_HEIGHT } from './titlebar'
@@ -27,6 +28,7 @@ const buttonClass =
 const stopTitlebarDrag = (event: PointerEvent<HTMLButtonElement>) => event.stopPropagation()
 
 export function WslgWindowControls({ isFullscreen, isMaximized }: WslgWindowControlsProps) {
+  const { t } = useI18n()
   const controls = window.hermesDesktop?.windowControls
 
   if (!controls || isFullscreen) {
@@ -40,14 +42,14 @@ export function WslgWindowControls({ isFullscreen, isMaximized }: WslgWindowCont
   // and the button silently does nothing.
   return (
     <div
-      aria-label="Window controls"
+      aria-label={t.shell.windowControls}
       className="fixed right-0 top-0 z-80 flex items-stretch overflow-hidden bg-(--ui-chat-surface-background) text-[10px]"
       // Pin the real titlebar height: the shared --titlebar-height var is
       // contextually zeroed inside the contrib shell, so read the constant.
       style={{ height: `${TITLEBAR_HEIGHT}px` } as CSSProperties}
     >
       <button
-        aria-label="Minimize window"
+        aria-label={t.shell.minimizeWindow}
         className={buttonClass}
         onClick={() => controls.minimize()}
         onPointerDown={stopTitlebarDrag}
@@ -56,7 +58,7 @@ export function WslgWindowControls({ isFullscreen, isMaximized }: WslgWindowCont
         <Codicon name="chrome-minimize" size={10} />
       </button>
       <button
-        aria-label={isMaximized ? 'Restore window' : 'Maximize window'}
+        aria-label={isMaximized ? t.shell.restoreWindow : t.shell.maximizeWindow}
         className={buttonClass}
         onClick={() => controls.toggleMaximize()}
         onPointerDown={stopTitlebarDrag}
@@ -65,7 +67,7 @@ export function WslgWindowControls({ isFullscreen, isMaximized }: WslgWindowCont
         <Codicon name={isMaximized ? 'chrome-restore' : 'chrome-maximize'} size={10} />
       </button>
       <button
-        aria-label="Close window"
+        aria-label={t.shell.closeWindow}
         className={cn(
           buttonClass,
           'hover:bg-[#c42b1c] hover:text-white active:bg-[#b3271a] active:text-white dark:hover:bg-[#c42b1c]'

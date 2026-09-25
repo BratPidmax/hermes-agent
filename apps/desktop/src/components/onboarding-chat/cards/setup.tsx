@@ -12,6 +12,7 @@ import { useSessionView } from '@/app/chat/session-view'
 import { $chatLayoutPicked, assembleChatOnboarding } from '@/components/onboarding-chat/assembly'
 import { CardFrame, type CardProps, useCardCommit } from '@/components/onboarding-chat/cards/frame'
 import { Chip } from '@/components/onboarding-chat/chip'
+import { useI18n } from '@/i18n'
 import {
   accentsFor,
   AccentSwatch,
@@ -54,6 +55,7 @@ interface ConnectorPicksProps {
 
 /** The picks themselves, fed by ConnectorsCard. Plugins lead the one group (NS-960 D1). */
 export function ConnectorPicks({ catalog, commit, done, locked, plugins }: ConnectorPicksProps) {
+  const { t } = useI18n()
   const answers = useStore($onboardingAnswers)
   const [query, setQuery] = useState('')
 
@@ -98,7 +100,7 @@ export function ConnectorPicks({ catalog, commit, done, locked, plugins }: Conne
   if (plugins.length === 0 && (catalog.status === 'unavailable' || (catalog.status === 'ready' && rows.length === 0))) {
     return (
       <CardFrame
-        continueLabel="Skip this"
+        continueLabel={t.onboardingChat.skipThis}
         done={done}
         locked={locked}
         onContinue={() => commit('apps I use: none for now')}
@@ -127,7 +129,7 @@ export function ConnectorPicks({ catalog, commit, done, locked, plugins }: Conne
       ) : (
         <>
           {rows.length + plugins.length > 12 ? (
-            <SearchField onChange={setQuery} placeholder="Find an app" value={query} />
+            <SearchField onChange={setQuery} placeholder={t.connectors.search} value={query} />
           ) : null}
           <div className="grid max-h-72 grid-cols-3 gap-2 overflow-y-auto">
             {shownPlugins.map(plugin => (
@@ -170,8 +172,8 @@ export function ConnectorPicks({ catalog, commit, done, locked, plugins }: Conne
           here. Saying so is what keeps the Connect cards later from reading as
           a second ask for the same thing. */}
       <p className="text-xs text-muted-foreground">
-        <strong className="font-medium text-foreground">Nothing connects or installs yet.</strong> Hermes will offer to
-        link these, or install a plugin, when a task needs them, and asks first.
+        <strong className="font-medium text-foreground">{t.onboardingChat.nothingConnects}</strong>{' '}
+        {t.onboardingChat.nothingConnectsRest}
       </p>
     </CardFrame>
   )

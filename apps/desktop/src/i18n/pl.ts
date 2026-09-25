@@ -80,7 +80,8 @@ export const pl: Translations = defineLocale({
     on: 'Włączone',
     off: 'Wyłączone'
   ,
-    bots: 'Boty',},
+    bots: 'Boty',
+    saveChanges: 'Zapisz zmiany',},
 
   fileMenu: {
     revealFinder: 'Pokaż w Finderze',
@@ -776,7 +777,8 @@ export const pl: Translations = defineLocale({
         auto: 'Auto',
         rtl: 'Od prawej do lewej',
         ltr: 'Od lewej do prawej',
-      },},
+      },
+      marketplaceFrom: 'Z katalogu VS Code Marketplace',},
     fieldLabels: {
       ...FIELD_LABELS,
       model: 'Domyślny model',
@@ -2419,7 +2421,14 @@ export const pl: Translations = defineLocale({
     importEmpty: 'Wklej kod mapy, aby ją wczytać.',
     importSuccess: nodes => `Wczytano mapę z ${nodes} ${nodes === 1 ? 'węzłem' : 'węzłami'}.`,
     importedBadge: 'zaimportowana mapa',
-    resetToMine: 'Powrót do mojej mapy'
+    resetToMine: 'Powrót do mojej mapy',
+    editNode: 'Edytuj',
+    timelineScrubber: 'Suwak osi czasu',
+    archiveSkill: 'Archiwizuj umiejętność',
+    deleteMemory: 'Usuń pamięć',
+    deleteConfirmLabel: 'Usuń',
+    deleteDescription: 'Ta pamięć zostanie trwale usunięta.',
+    deleteTitle: (label: string) => `Usunąć ${label}?`,
   },
 
   agents: {
@@ -2526,7 +2535,14 @@ export const pl: Translations = defineLocale({
       referenceImageTooLarge: 'Obraz referencyjny jest za duży. Użyj poniżej 16 MB.',
       referenceImageInvalid: 'Nie udało się odczytać tego obrazu referencyjnego. Spróbuj PNG, JPG, WebP lub GIF.',
       adopt: 'Zaadoptuj',
-      startOver: 'Zacznij od nowa'
+      startOver: 'Zacznij od nowa',
+      unavailableHeadline: 'Dodaj backend obrazów, aby generować',
+      unavailableBody: 'Wyklucie własnego zwierzaka wymaga dostawcy, który potrafi oprzeć się na obrazie referencyjnym.',
+      setupButton: 'Skonfiguruj generowanie obrazów',
+      grabKeyFrom: 'Klucz API zdobędziesz u',
+      addReference: 'Dodaj obraz referencyjny',
+      removeReference: 'Usuń obraz referencyjny',
+      hatchProgress: 'Postęp wykluwania',
     },
     installTheme: {
       title: 'Zainstaluj motyw…',
@@ -4043,6 +4059,23 @@ export const pl: Translations = defineLocale({
     probeErrorDetails: 'Szczegóły',
     openLogs: 'Otwórz logi',},
 
+  onboardingChat: {
+    skipSetup: 'Pomiń konfigurację',
+    skipThis: 'Pomiń to',
+    fallbackOption: 'Sprawdźmy to razem',
+    nothingConnects: 'Nic jeszcze się nie łączy ani nie instaluje.',
+    nothingConnectsRest: 'Hermes zaproponuje połączenie tych usług albo instalację wtyczki, gdy zadanie tego będzie wymagać — i najpierw zapyta.',
+    buildStartFailed: 'Nie udało się rozpocząć pierwszego zadania. Spróbuj ponownie, aby sprawdzić jego sesję.',
+    buildStarted: (title: string) => `${title} uruchomione — znajdziesz je wśród sesji`,
+    buildOpening: (title: string) => `Otwieranie: ${title}...`,
+    retryFirstBuild: 'Ponów pierwsze zadanie'
+  },
+  sessionTile: {
+    openFailed: 'Nie udało się otworzyć tej sesji'
+  },
+  memorySetup: {
+    browserConsent: 'Oczekiwanie na zgodę w przeglądarce...'
+  },
   onboarding: {
     headerTitle: 'Skonfigurujmy Hermes Agent',
     headerDesc: 'Połącz się z dostawcą modelu, aby rozpocząć czat. Większość opcji wymaga jednego kliknięcia.',
@@ -4312,7 +4345,11 @@ export const pl: Translations = defineLocale({
         ram: 'RAM',
         unifiedNote: 'Pamięć zunifikowana — GPU i system dzielą ten sam pulę.',
         toggle: 'Zasoby systemowe',
-      },}
+      },},
+    minimizeWindow: 'Zminimalizuj okno',
+    maximizeWindow: 'Maksymalizuj okno',
+    restoreWindow: 'Przywróć okno',
+    closeWindow: 'Zamknij okno',
   },
 
   rightSidebar: {
@@ -4773,7 +4810,24 @@ export const pl: Translations = defineLocale({
         oauth: {
           title: provider => `Twoje logowanie ${provider} wygasło`,
         },
-      },},
+      },
+      couldNotFetchMedia: (name: string) => `Nie udało się pobrać ${name} z bramki (brak, nie do odczytu albo za duży).`,
+      openMediaFile: (kind: string) => `Otwórz plik ${kind}`,
+      audioKind: 'audio',
+      videoKind: 'wideo',
+      mediaLoading: (name: string) => `Ładowanie: ${name}...`,
+      imageLoadFailed: (name: string) => `Nie udało się załadować ${name}.`,
+      messageFrom: (sender: string) => `Wiadomość od: ${sender}`,
+      repliedTo: (sender: string) => `Odpowiedziano do: ${sender}`,
+      showMessage: 'pokaż wiadomość',
+      showReply: 'pokaż odpowiedź',
+      searchEmoji: 'Szukaj emoji...',
+      loadingEmoji: 'Ładowanie emoji...',
+      noEmojiFound: 'Nie znaleziono emoji.',
+      moreEmoji: 'Więcej emoji',
+      reactedBy: (author: string) => `Reakcja: ${author}`,
+      conversationTimeline: 'Oś czasu rozmowy',
+      toolPayload: 'Dane narzędzia',},
     approval: {
       gatewayDisconnected: 'Hermes gateway is not connected',
       sendFailed: 'Could not send approval response',
@@ -4926,7 +4980,8 @@ export const pl: Translations = defineLocale({
         listed: 'Wyliczono umiejętności',
         listFailed: 'Nie udało się wyliczyć umiejętności',
         unavailable: 'Wynik umiejętności niedostępny',
-      },}
+      },
+      searchLabel: 'Szukaj',}
   ,
     catalogInstall: {
       preparing: 'Przygotowywanie instalacji...',
@@ -4960,7 +5015,8 @@ export const pl: Translations = defineLocale({
         warnings: 'Skanowanie znalazło ostrzeżenia',
         failed: 'Skanowanie nie powiodło się',
       },
-    },},
+    },
+    embedLoadFailed: (label: string) => `Nie udało się załadować osadzenia ${label}`,},
 
   prompts: {
     gatewayDisconnected: 'Hermes gateway is not connected',

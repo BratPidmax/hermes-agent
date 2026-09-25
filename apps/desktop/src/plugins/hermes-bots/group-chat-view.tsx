@@ -538,7 +538,7 @@ function GroupChatSettingsDialog({
             variant="secondary"
           >
             <Codicon name="organization" />
-            {`Manage members (${(members || []).length})…`}
+            {b.group.manageMembersCount((members || []).length)}
           </Button>
         ) : null}
         <DialogFooter>
@@ -798,9 +798,9 @@ export function GroupChatWorkspace({ group, members, onBack, visible = true }: G
           <Codicon name="gear" />
         </Button>
       </Tip>
-      <Tip label="Manage members">
+      <Tip label={b.group.membersTip}>
         <Button
-          aria-label="Manage group members"
+          aria-label={b.group.membersAria}
           className="shrink-0 text-(--ui-text-tertiary) hover:text-foreground"
           onClick={() => setMemberPickerOpen(true)}
           size="sm"

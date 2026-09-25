@@ -399,7 +399,8 @@ export interface Translations {
     update: string
     tryHint: (term: string) => string
     on: string
-    off: string
+    off: string;
+    saveChanges: string;
   }
 
   fileMenu: {
@@ -995,7 +996,8 @@ export interface Translations {
         noneAvailable: string
         turnOnFailed: string
         turnOffFailed: string
-      }
+      };
+      marketplaceFrom: string;
     }
     fieldLabels: Record<string, string>
     fieldDescriptions: Record<string, string>
@@ -2192,7 +2194,14 @@ export interface Translations {
     importEmpty: string
     importSuccess: (nodes: number) => string
     importedBadge: string
-    resetToMine: string
+    resetToMine: string;
+    editNode: string;
+    timelineScrubber: string;
+    archiveSkill: string;
+    deleteMemory: string;
+    deleteConfirmLabel: string;
+    deleteDescription: string;
+    deleteTitle: (label: string) => string;
   }
   agents: {
     extendedTranscript: string
@@ -2297,7 +2306,14 @@ export interface Translations {
       referenceImageTooLarge: string
       referenceImageInvalid: string
       adopt: string
-      startOver: string
+      startOver: string;
+      unavailableHeadline: string;
+      unavailableBody: string;
+      setupButton: string;
+      grabKeyFrom: string;
+      addReference: string;
+      removeReference: string;
+      hatchProgress: string;
     }
     installTheme: {
       title: string
@@ -3529,6 +3545,23 @@ export interface Translations {
     openLogs: string
   }
 
+  onboardingChat: {
+    skipSetup: string
+    skipThis: string
+    fallbackOption: string
+    nothingConnects: string
+    nothingConnectsRest: string
+    buildStartFailed: string
+    buildStarted: (title: string) => string
+    buildOpening: (title: string) => string
+    retryFirstBuild: string
+  }
+  sessionTile: {
+    openFailed: string
+  }
+  memorySetup: {
+    browserConsent: string
+  }
   onboarding: {
     headerTitle: string
     headerDesc: string
@@ -3847,7 +3880,11 @@ export interface Translations {
       modelPinned: string
       modelTitle: (provider: string, model: string) => string
       providerModelTitle: (provider: string, model: string) => string
-    }
+    };
+    minimizeWindow: string;
+    maximizeWindow: string;
+    restoreWindow: string;
+    closeWindow: string;
   }
 
   rightSidebar: {
@@ -4189,7 +4226,24 @@ export interface Translations {
       restoreNext: string
       goForward: string
       sendEdited: string
-      attachingFile: string
+      attachingFile: string;
+      couldNotFetchMedia: (name: string) => string;
+      openMediaFile: (kind: string) => string;
+      audioKind: string;
+      videoKind: string;
+      mediaLoading: (name: string) => string;
+      imageLoadFailed: (name: string) => string;
+      messageFrom: (sender: string) => string;
+      repliedTo: (sender: string) => string;
+      showMessage: string;
+      showReply: string;
+      searchEmoji: string;
+      loadingEmoji: string;
+      noEmojiFound: string;
+      moreEmoji: string;
+      reactedBy: (author: string) => string;
+      conversationTimeline: string;
+      toolPayload: string;
     }
     approval: {
       gatewayDisconnected: string
@@ -4329,8 +4383,10 @@ export interface Translations {
         runningPrefixedTool: (prefix: string, action: string) => string
         runningTool: (action: string) => string
       }
-      titles: Record<ToolTitleKey, ToolTitleCopy>
-    }
+      titles: Record<ToolTitleKey, ToolTitleCopy>;
+      searchLabel: string;
+    };
+    embedLoadFailed: (label: string) => string;
   }
 
   prompts: {
