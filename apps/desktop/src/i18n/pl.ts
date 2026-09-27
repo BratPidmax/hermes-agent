@@ -5,6 +5,13 @@ import type { Translations } from './types'
 
 export const pl: Translations = defineLocale({
 
+  externalOpenFailed: {
+    title: 'Nie udało się otworzyć tegołącza',
+    message: 'Żadna przeglądarka nie jest zarejestrowana do otwierania tego adresu. Skopiuj łącze i otwórz je ręcznie.',
+    copyUrl: 'Kopiuj łącze',
+    close: 'Zamknij'
+  },
+
   catalog: {
     add: 'Dodaj',
     added: 'Dodano',
@@ -189,6 +196,8 @@ export const pl: Translations = defineLocale({
       signInAgain: 'Zaloguj się ponownie',},
     failure: {
       title: "Hermes nie mógł się uruchomić",
+      bundledReinstallHint: 'Ta instalacja z pakietem nie może naprawić się z poziomu aplikacji — przeinstaluj aplikację, aby przywrócić jej backend.',
+      reinstallApp: 'Przeinstaluj aplikację',
       description:
         "Proces w tle nie wystartował. Wypróbuj jeden z kroków naprawczych poniżej. Nic tutaj nie usunie Twoich czatów ani ustawień.",
       remoteTitle: 'Wymagane logowanie do zdalnej bramki',
@@ -234,6 +243,9 @@ export const pl: Translations = defineLocale({
 
   notifications: {
     region: 'Powiadomienia',
+    sharedProfileWarning: 'Inna instalacja Hermes korzysta z tego profilu. Obie instalacje współdzielą jego ustawienia i dane, więc zmiany mogą się kolidować. Możesz kontynuować albo zamknąć drugą instalację przed wprowadzaniem zmian.',
+    updateDesktopApp: 'Zaktualizuj aplikację',
+    updateReadyMessageAppInstaller: 'Nowa wersja Hermes jest gotowa. Zaktualizuj teraz, a Windows dokończy instalację.',
     hide: 'Ukryj',
     show: 'Pokaż',
     more: count => `${count} więcej ${count === 1 ? 'powiadomienie' : 'powiadomień'}`,
@@ -566,6 +578,7 @@ export const pl: Translations = defineLocale({
       kinds: { bundled: 'wbudowane', disk: 'na dysku', runtime: 'uruchomieniowe' },
       installModal: {
         title: 'Zainstaluj wtyczkę',
+        installUncertain: 'Hermes przestał czekać na wynik instalacji, ale wtyczka może się jeszcze instalować. Zamknij to okno i użyj „Ponowne skanowanie” w Wtyczkach, zanim spróbujesz instalować ponownie.',
         description: 'Przed instalacją sprawdź, co zawiera to repozytorium.',
         repoLabel: 'Repozytorium',
         includesHeading: 'Ten pakiet zawiera',
@@ -688,6 +701,8 @@ export const pl: Translations = defineLocale({
     },
     appearance: {
       title: 'Wygląd',
+      fileBrowserTitle: 'Przeglądarka plików',
+      fileBrowserDesc: 'Pokazuje przeglądarkę plików obok czatu, gdy otwarty jest obszar roboczy. Przełącznik na pasku tytułu też to zmienia.',
       intro: 'Tylko dla pulpitu. Tryb określa jasność, a motyw — paletę i wygląd czatu.',
       colorMode: 'Tryb kolorów',
       colorModeDesc: 'Wybierz stały tryb albo pozwól Hermesowi używać ustawień systemu.',
@@ -2352,6 +2367,9 @@ export const pl: Translations = defineLocale({
       officialPill: 'Oficjalna',
       plugins: {
         agentTitle: 'Wtyczki agenta',
+        toolsetOn: (name, profile) => `Narzędzia agenta ${name} włączone dla ${profile}`,
+        toolsetOff: (name, profile) => `Narzędzia agenta ${name} wyłączone dla ${profile}`,
+        toolsetToggleFailed: name => `Nie udało się przełączyć narzędzi agenta ${name}; panel Desktop pozostał bez zmian`,
         agentBlurb: 'Rozszerz agenta dla wybranego profilu — narzędzia, haczyki, dostawcy. Obowiązuje po restarcie bramki.',
         pageBlurb: 'Wtyczka może rozszerzać tę aplikację, agenta lub oba — każda połowa ma własny przełącznik.',
         halfDesktop: 'Pulpit',
@@ -3136,6 +3154,8 @@ export const pl: Translations = defineLocale({
 
   cron: {
       close: 'Zamknij cron',
+      scriptLabel: 'Skrypt',
+      scriptBadge: 'skrypt',
       title: 'Zaplanowane zadania',
       count: count => `${count} ${count === 1 ? 'zadanie' : 'zadania'}`,
       search: 'Szukaj zadań cron...',
@@ -3444,6 +3464,8 @@ export const pl: Translations = defineLocale({
     toolCallCount: count => `${count} ${count === 1 ? 'wywołanie narzędzia' : 'wywołań narzędzi'}`,
     row: {
       pin: 'Przypnij',
+      unarchive: 'Odarchiwizuj',
+      continuationOrigin: 'Automatyczna kontynuacja — ta rozmowa została skompresowana i kontynuowana',
       unpin: 'Odepnij',
       markUnread: 'Oznacz jako nieprzeczytane',
       markRead: 'Oznacz jako przeczytane',
@@ -3556,6 +3578,8 @@ export const pl: Translations = defineLocale({
 
   composer: {
     message: 'Wiadomość',
+    queueDroppedTitle: 'Kolejkowane polecenie odrzucone',
+    queueDroppedBody: 'Ten wpis z kolejki w tle został odrzucony, ponieważ jego sesji nie udało się wznowić po wielu próbach. Reszta kolejki nie została naruszona.',
     wakingProfile: profile => `Uruchamianie profilu ${profile}…`,
     placeholderStarting: 'Uruchamianie Hermesa…',
     placeholderReconnecting: 'Ponowne łączenie z Hermesem…',
@@ -4107,6 +4131,10 @@ export const pl: Translations = defineLocale({
     changeLogFallbackItem: 'Ulepszenia i poprawki',},
 
   install: {
+    setupChoiceDescLocal: 'Zainstaluj Hermes na tym komputerze albo połącz się z bramą Hermes, którą już uruchamiasz.',
+    useLocalTitle: 'Użyj Hermes na tym komputerze',
+    useLocalDesc: 'Środowisko Hermes jest już tu zainstalowane — uruchom je jednym kliknięciem. Nic nie jest pobierane.',
+    bundledLocalDesc: 'Użyj środowiska Hermes dołączonego do tej aplikacji — dołączony backend to lokalna instalacja.',
     stageStates: {
       pending: 'Oczekujące',
       running: 'Instalowanie',
@@ -4200,6 +4228,7 @@ export const pl: Translations = defineLocale({
   },
   onboarding: {
     headerTitle: 'Skonfigurujmy Hermes Agent',
+    localModelNamePlaceholder: 'Nazwa modelu (np. command-a-plus-05-2026)',
     headerDesc: 'Połącz się z dostawcą modelu, aby rozpocząć czat. Większość opcji wymaga jednego kliknięcia.',
     preparingInstall: 'Hermes kończy instalację. Przy pierwszym uruchomieniu zwykle zajmuje to mniej niż minutę.',
     starting: 'Uruchamianie Hermesa…',
@@ -4321,6 +4350,7 @@ export const pl: Translations = defineLocale({
     appControls: 'Sterowanie aplikacją',
     modelMenu: {
       search: 'Wyszukaj modele',
+      followDefault: 'Użyj ustawień domyślnych',
       noModels: 'Nie znaleziono żadnych modeli',
       editModels: 'Edit Models…',
       refreshModels: 'Refresh Models',
@@ -4954,6 +4984,7 @@ export const pl: Translations = defineLocale({
       toolPayload: 'Dane narzędzia',},
     approval: {
       gatewayDisconnected: 'Hermes gateway is not connected',
+      commandDetails: 'Szczegóły polecenia',
       sendFailed: 'Could not send approval response',
       run: 'Uruchom',
       command: 'Polecenie',
@@ -4972,6 +5003,7 @@ export const pl: Translations = defineLocale({
       openSafetySettings: 'Otwórz ustawienia bezpieczeństwa',},
     clarify: {
       notReady: 'Żądanie doprecyzowania nie jest jeszcze gotowe',
+      notDelivered: 'To pytanie nie dotarło do aplikacji, więc nie można na nie odpowiedzieć tutaj. Naciśnij Stop, aby zakończyć turę, a potem odpowiedz na czacie.',
       gatewayDisconnected: 'Hermes gateway is not connected',
       sendFailed: 'Nie można wysłać odpowiedzi',
       loadingQuestion: 'Ładowanie pytania…',
@@ -5184,6 +5216,10 @@ export const pl: Translations = defineLocale({
 
   desktop: {
     audioReadFailed: 'Nie można odczytać nagranego dźwięku',
+    staleSessionTitle: 'Rozmowa nieaktualna',
+    staleSessionBody: 'To okno było za innym widokiem tej samej rozmowy. Załadowano najnowsze wiadomości. Wyślij ponownie, jeśli nadal chcesz.',
+    restored: 'Przywrócono',
+    unarchiveFailed: 'Nie udało się odarchiwizować',
     sessionUnavailable: 'Sesja niedostępna',
     createSessionFailed: 'Nie można utworzyć nowej sesji',
     promptFailed: 'Nie udało się wysłać promptu',
