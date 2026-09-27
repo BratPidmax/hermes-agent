@@ -1807,6 +1807,7 @@ export const en: Translations = {
       notInCatalog: "isn't in this provider's model list — calls may fall back to a backup.",
       moaTitle: 'Mixture of Agents',
       moaPreset: 'Preset',
+      moaPresets: 'MoA presets',
       moaDescription:
         'Configure named presets that appear as models under the Mixture of Agents provider. The aggregator is the acting model — it runs every step of the tool loop, and almost all of the run’s cost is billed to its provider. References only advise once per user turn by default.',
       moaAggregator: 'Aggregator',
@@ -1825,6 +1826,9 @@ export const en: Translations = {
         profile_describer: { label: 'Profile describer', hint: 'Auto profile descriptions' },
         curator: { label: 'Curator', hint: 'Skill-usage review' }
       }
+    },
+    memory: {
+      providerConfigLoading: 'Loading memory provider settings...'
     },
     localModels: {
       connectionChanged: 'Local models connection changed',
@@ -4814,6 +4818,9 @@ export const en: Translations = {
   },
 
   preview: {
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
+    resetView: 'Reset',
     tab: 'Preview',
     closePane: 'Close preview pane',
     loading: 'Loading preview',
@@ -5012,6 +5019,9 @@ export const en: Translations = {
   },
 
   assistant: {
+    embeds: {
+      openDiagram: 'Open diagram'
+    },
     thread: {
       loadingSession: 'Loading session',
       showEarlier: 'Show earlier messages',
@@ -5565,6 +5575,7 @@ export const en: Translations = {
     restartToSaveImages: 'Restart Hermes Desktop to save images',
     imageDownloadFailed: 'Image download failed',
     openImage: 'Open image',
+    generatedImageAlt: 'Generated image',
     downloadImage: 'Download image',
     savingImage: 'Saving image',
     imagePreviewFailed: 'Image preview failed',

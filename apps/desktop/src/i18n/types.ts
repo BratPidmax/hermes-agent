@@ -1501,6 +1501,7 @@ export interface Translations {
       deepLinkErrorTooLarge: string
     }
     model: {
+      moaPresets: string
       setupProviderFallback: string
       setUpProvider: (name: string) => string
       staleAuxBefore: (count: number, names: string) => string
@@ -1549,6 +1550,9 @@ export interface Translations {
       moaAggregatorBilled: string
       moaReferenceHint: string
       tasks: Record<string, AuxTaskCopy>
+    }
+    memory: {
+      providerConfigLoading: string
     }
     localModels: {
       connectionChanged: string
@@ -4081,6 +4085,9 @@ export interface Translations {
   }
 
   preview: {
+    zoomIn: string
+    zoomOut: string
+    resetView: string
     tab: string
     closePane: string
     loading: string
@@ -4268,6 +4275,9 @@ export interface Translations {
   }
 
   assistant: {
+    embeds: {
+      openDiagram: string
+    }
     thread: {
       loadingSession: string
       showEarlier: string
@@ -4644,6 +4654,7 @@ export interface Translations {
     restartToSaveImages: string
     imageDownloadFailed: string
     openImage: string
+    generatedImageAlt: string
     downloadImage: string
     savingImage: string
     imagePreviewFailed: string

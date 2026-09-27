@@ -1440,6 +1440,7 @@ export const pl: Translations = defineLocale({
       inheritMainEffort: 'dziedzicz · wysiłek modelu głównego',
       moaTitle: 'Mixture of Agents',
       moaPreset: 'Preset',
+      moaPresets: 'Presety MoA',
       moaDescription: 'Skonfiguruj nazwane presety, które pojawiają się jako modele pod dostawcą Mixture of Agents. Agregator to model wykonawczy — przeprowadza każdy krok pętli narzędzi, a niemal cały koszt uruchomienia jest rozliczany u jego dostawcy. Odniesienia domyślnie doradzają tylko raz na turę użytkownika.',
       moaAggregator: 'Agregator',
       moaAggregatorBilled: 'model wykonawczy · rozliczany za uruchomienie',
@@ -1874,6 +1875,9 @@ export const pl: Translations = defineLocale({
       permissionFailed: 'Nie udało się otworzyć Ustawień systemowych. Otwórz ręcznie Prywatność i bezpieczeństwo, a potem ponów próbę.',
       captureFailed: 'Nie udało się przechwycić przedniego okna. Nic nie dołączono ani wysłano.',
       contextChanged: 'Bieżąca wersja robocza zmieniła się podczas przechwytywania. Zrzut nie został dołączony ani wysłany.',
+    },
+    memory: {
+      providerConfigLoading: 'Ładowanie ustawień dostawcy pamięci...'
     },
     localModels: {
       connectionChanged: 'Połączenie z lokalnymi modelami zmienione',
@@ -4562,6 +4566,9 @@ export const pl: Translations = defineLocale({
     hideIgnored: 'Ukryj pliki ignorowane przez gita',},
 
   preview: {
+    zoomIn: 'Powiększ',
+    zoomOut: 'Pomniejsz',
+    resetView: 'Wyzeruj',
     tab: 'Podgląd',
     closePane: 'Zamknij panel podglądu',
     loading: 'Ładowanie podglądu',
@@ -4746,6 +4753,9 @@ export const pl: Translations = defineLocale({
   },
 
   assistant: {
+    embeds: {
+      openDiagram: 'Otwórz diagram'
+    },
     thread: {
       loadingSession: 'Ładowanie sesji',
       showEarlier: 'Pokaż wcześniejsze wiadomości',
@@ -5282,6 +5292,7 @@ export const pl: Translations = defineLocale({
     restartToSaveImages: 'Uruchom ponownie aplikację Hermes Desktop, aby zapisać obrazy',
     imageDownloadFailed: 'Pobieranie obrazu nie powiodło się',
     openImage: 'Otwórz obraz',
+    generatedImageAlt: 'Wygenerowany obraz',
     downloadImage: 'Pobierz obraz',
     savingImage: 'Zapisywanie obrazu',
     imagePreviewFailed: 'Podgląd obrazu nie powiódł się',

@@ -91,7 +91,7 @@ export const GeneratedImage: FC<{ aspectRatio?: string; result?: unknown }> = ({
             type="button"
           >
             <img
-              alt="Generated image"
+              alt={copy.generatedImageAlt}
               className={cn(
                 'absolute inset-0 size-full object-contain opacity-0 transition-opacity duration-500 ease-out',
                 loaded && 'opacity-100'
@@ -109,7 +109,7 @@ export const GeneratedImage: FC<{ aspectRatio?: string; result?: unknown }> = ({
       </span>
       {src && (
         <ImageLightbox
-          alt="Generated image"
+          alt={copy.generatedImageAlt}
           copy={copy}
           onClick={download}
           onOpenChange={open => setLightboxOpen(open ? media.key : null)}

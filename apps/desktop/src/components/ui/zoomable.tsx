@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Tip } from '@/components/ui/tooltip'
+import { useI18n } from '@/i18n'
 import { Check, Copy, Maximize, RefreshCw, X, ZoomIn, ZoomOut } from '@/lib/icons'
 import { cn } from '@/lib/utils'
 
@@ -116,6 +117,7 @@ function Toolbar({
   zoomIn: () => void
   zoomOut: () => void
 }) {
+  const { t } = useI18n()
   const [copied, setCopied] = useState(false)
   const resetRef = useRef<null | number>(null)
 
@@ -154,13 +156,13 @@ function Toolbar({
 
   return (
     <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border/70 bg-background/85 p-1 shadow-sm backdrop-blur">
-      <ToolbarButton label="Zoom out" onClick={zoomOut}>
+      <ToolbarButton label={t.preview.zoomOut} onClick={zoomOut}>
         <ZoomOut className="size-4" />
       </ToolbarButton>
-      <ToolbarButton label="Reset" onClick={reset}>
+      <ToolbarButton label={t.preview.resetView} onClick={reset}>
         <RefreshCw className="size-4" />
       </ToolbarButton>
-      <ToolbarButton label="Zoom in" onClick={zoomIn}>
+      <ToolbarButton label={t.preview.zoomIn} onClick={zoomIn}>
         <ZoomIn className="size-4" />
       </ToolbarButton>
       {onCopy && (
