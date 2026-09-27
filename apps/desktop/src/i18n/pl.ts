@@ -5,6 +5,62 @@ import type { Translations } from './types'
 
 export const pl: Translations = defineLocale({
 
+  catalog: {
+    add: 'Dodaj',
+    added: 'Dodano',
+    discover: 'Odkrywaj',
+    featured: 'Polecane',
+    mostStarred: 'Najczęściej gwiazdkowane',
+    newest: 'Najnowsze',
+    recentlyUpdated: 'Ostatnio zaktualizowane',
+    alphabetical: 'Nazwa',
+    sortBy: 'Sortuj wg',
+    seeAll: 'Zobacz wszystkie',
+    related: 'Więcej podobnych',
+    tags: 'Tagi',
+    screenshots: 'Zrzuty ekranu',
+    listView: 'Widok listy',
+    cardView: 'Widok kart',
+    installTitle: name => `Zainstalować „${name}”?`,
+    installDescription: 'Ta umiejętność będzie dostępna w nowych sesjach. Instaluj tylko źródła, którym ufasz.',
+    installTo: 'Zainstaluj w',
+    thisComputer: 'Ten komputer',
+    installing: 'Instalowanie...',
+    installComplete: name => `„${name}” zainstalowano`,
+    destinationChanged: 'Cel instalacji się zmienił. Zamknij to okno i otwórz ponownie link instalacyjny.',
+    installed: 'Zainstalowano',
+    searchSkills: 'Szukaj umiejętności',
+    searchPlugins: 'Szukaj wtyczek',
+    allSources: 'Wszystkie źródła',
+    allCategories: 'Wszystkie kategorie',
+    about: 'Informacje',
+    author: 'Autor',
+    source: 'Źródło',
+    category: 'Kategoria',
+    version: 'Wersja',
+    platforms: 'Platformy',
+    requires: 'Wymaga',
+    tools: 'Narzędzia',
+    hooks: 'Hooki',
+    commands: 'Polecenia',
+    license: 'Licencja',
+    addedDate: 'Dodano',
+    updatedDate: 'Zaktualizowano',
+    repository: 'Repozytorium',
+    documentation: 'Dokumentacja',
+    noResults: 'Brak wyników',
+    tryAnother: 'Spróbuj innego wyszukiwania albo wyczyść filtry.',
+    clearFilters: 'Wyczyść filtry',
+    filters: 'Filtry',
+    loadFailed: 'Nie udało się wczytać katalogu',
+    retry: 'Spróbuj ponownie',
+    more: 'Pokaż więcej',
+    pinned: 'Sprawdzony commit',
+    snapshotHint: 'Z katalogu Hermes. Przeglądanie nigdy nie kontaktuje się z repozytoriami źródłowymi.',
+    installHint: 'Przejrzyj źródło przed instalacją. Zmiany obowiązują w nowych sesjach.',
+    results: count => `${count.toLocaleString()} ${count === 1 ? 'wynik' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) ? 'wyniki' : 'wyników'}`,
+    back: 'Powrót do wyników'
+  },
   sessionImport: {
     title: 'Kontynuuj z innej aplikacji',
     subtitle: 'Przenieś rozmowę do Hermesa i kontynuuj tam, gdzie przerwałeś.',
@@ -189,6 +245,9 @@ export const pl: Translations = defineLocale({
     backendOutOfDateTitle: 'Backend nieaktualny',
     backendOutOfDateMessage:
       'Twój backend Hermesa jest starszy niż ta wersja pulpitu i może nie działać poprawnie. Zaktualizuj, aby je zsynchronizować.',
+    desktopOutOfDateTitle: 'Aplikacja Hermes nieaktualna',
+    desktopOutOfDateMessage:
+      'Ta aplikacja Hermesa jest starsza niż backend, z którym działa, i może nie działać poprawnie. Zaktualizuj, aby je zsynchronizować.',
     installMethodUnsupportedTitle: 'Nieobsługiwana metoda instalacji',
     updateHermes: 'Zaktualizuj Hermesa',
     updateReadyTitle: 'Aktualizacja gotowa',
@@ -2996,7 +3055,36 @@ export const pl: Translations = defineLocale({
       switchTo: (name, gateway) => `Przełącz na ${name} w bramie ${gateway}`,
       deleteOn: gateway => ` w bramie ${gateway}`,
     
-      onGateway: (name, gateway) => `${name} · ${gateway}`,},
+      onGateway: (name, gateway) => `${name} · ${gateway}`,
+      localDevice: 'To urządzenie (lokalny backend — instaluje Hermes, jeśli go brak, w przeciwnym razie otwiera nową sesję)',
+      switchDeviceTitle: 'Przełączyć na „To urządzenie”?',
+      switchDeviceDesc:
+        'Otwiera nową sesję na tym komputerze. Bieżąca rozmowa pozostaje na drugiej bramie.',
+      switchDeviceConfirm: 'Przełącz',
+      installDeviceTitle: 'Przełączyć na „To urządzenie”?',
+      installDeviceDesc:
+        'Spowoduje to instalację Hermes w tym komputerze, a następnie otworzy nową sesję. Nic nie zostanie zainstalowane, dopóki nie potwierdzisz.',
+      installDeviceConfirm: 'Zainstaluj lokalnie',
+      connectExistingInstead: 'Połącz z istniejącym'
+    },
+    status: {
+      unread: count => (count === 1
+        ? '1 nieprzeczytana sesja'
+        : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)
+          ? `${count} nieprzeczytane sesje`
+          : `${count} nieprzeczytanych sesji`),
+      needsInput: count =>
+        count === 1
+          ? '1 sesja wymaga odpowiedzi'
+          : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)
+            ? `${count} sesje wymagają odpowiedzi`
+            : `${count} sesji wymaga odpowiedzi`,
+      working: count => (count === 1
+        ? '1 sesja działa'
+        : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)
+          ? `${count} sesje działają`
+          : `${count} sesji działa`)
+    },
     remoteOverride: {
       menuItem: 'Połącz ze zdalnym hostem…',
       badge: host => `Działa na ${host}`,
@@ -3855,7 +3943,7 @@ export const pl: Translations = defineLocale({
       copyFailure: 'Nie udało się skopiować kryterium do schowka',
       continuationFailed: 'Nie udało się zgłosić kontynuacji celu',
       continuationQueued: 'Cel wznowiony — kontynuacja w kolejce do zakończenia bieżącej tury',
-      continuationBusy: 'Cel wznowiony — sesja zajęta, użyj /interrupt, aby kontynuować bieżącą turę',
+      continuationBusy: 'Cel wznowiony — sesja zajęta, najpierw zatrzymaj bieżącą odpowiedź (przycisk Stop lub Esc), aby kontynuować',
       controlUnavailable: msg => `Sterowanie sesją niedostępne: ${msg}`,
       dismissError: 'Odrzuć błąd',
       add: 'Dodaj',
@@ -3947,8 +4035,11 @@ export const pl: Translations = defineLocale({
     maybeLater: 'Może później',
     moreChanges: count => `Zawiera dodatkowo ${count} ${count === 1 ? 'zmianę' : 'zmian'}.`,
     manualTitle: 'Zaktualizuj z terminala',
+    manualUnavailableTitle: 'Nie można zaktualizować stąd',
     manualBody: 'Hermes został zainstalowany z wiersza poleceń, dlatego aktualizację również trzeba uruchomić w terminalu. Wklej to polecenie:',
+    manualBodyBackend: 'Backend Hermesa jest zarządzany poza tą aplikacją. Uruchom to na serwerze, który go hostuje:',
     manualPickedUp: 'Hermes pobierze nową wersję przy następnym uruchomieniu.',
+    manualPickedUpBackend: 'Backend przejmuje nową wersję po zakończeniu aktualizacji.',
     guiSkewTitle: 'Zaktualizuj aplikację komputerową',
     guiSkewBody:
       'Backend został zaktualizowany, ale pakiet aplikacji Hermes Desktop nie. Zaktualizuj lub zainstaluj ponownie aplikację Hermes Desktop (AppImage / .deb / .rpm), aby wersje były zgodne.',
