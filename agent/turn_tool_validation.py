@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
@@ -68,6 +69,79 @@ def _partial_exit(agent, messages, conversation_history, api_call_count, final_r
     }, "truncated", True)
 
 
+def _repair_normalizations(tool_name: str) -> set[str]:
+    """Every name ``repair_tool_call`` derives from *tool_name*: the XML/quote trim,
+    lowercase, ``-``/space → ``_``, CamelCase → snake_case and up to two ``_tool``
+    suffix strips, plus an edge trim so a quoted or padded spelling of a real tool
+    name cannot slip past the veto. Superset only — extra candidates widen the veto,
+    they never narrow it."""
+    trimmed = tool_name
+    for _sep in ('"', "'", "<", ">"):
+        _idx = trimmed.find(_sep)
+        if _idx > 0:
+            trimmed = trimmed[:_idx]
+    edge = trimmed.strip().strip("\"'<>")
+    if not edge:
+        return set()
+    _norm = lambda s: s.lower().replace("-", "_").replace(" ", "_")  # noqa: E731
+    _camel_snake = lambda s: re.sub(r"(?<!^)(?=[A-Z])", "_", s).lower()  # noqa: E731
+
+    def _strip_tool_suffix(s: str) -> Optional[str]:
+        lc = s.lower()
+        return next((s[: -len(sfx)].rstrip("_-") for sfx in ("_tool", "-tool", "tool") if lc.endswith(sfx)), None)
+
+    cands: set[str] = set()
+    for base in (trimmed, edge):
+        cands.update((base, base.lower(), _norm(base), _camel_snake(base)))
+    for _ in range(2):
+        extra: set[str] = set()
+        for c in cands:
+            stripped = _strip_tool_suffix(c)
+            if stripped:
+                extra.update((stripped, _norm(stripped), _camel_snake(stripped)))
+        cands |= extra
+    return {c for c in cands if c}
+
+
+def _damerau_le_1(a: str, b: str) -> bool:
+    """True when the Damerau-Levenshtein distance of *a* and *b* is at most one:
+    one substitution, one insertion/deletion, or one adjacent transposition. Written
+    out case by case instead of a DP table so the veto stays linear in name length."""
+    if a == b:
+        return True
+    la, lb = len(a), len(b)
+    if abs(la - lb) > 1:
+        return False
+    if la == lb:
+        diffs = [i for i in range(la) if a[i] != b[i]]
+        if len(diffs) == 1:
+            return True
+        return (len(diffs) == 2 and diffs[1] == diffs[0] + 1
+                and a[diffs[0]] == b[diffs[0] + 1] and a[diffs[0] + 1] == b[diffs[0]])
+    short, long = (a, b) if la < lb else (b, a)
+    i = 0
+    while i < len(short) and short[i] == long[i]:
+        i += 1
+    return long[i + 1:] == short[i:]
+
+
+def _scoped_veto_repair(agent: Any, tool_name: str, valid_names: set, foreign_names: set) -> Optional[str]:
+    """Fail-closed repair for sessions that enable the ``bouncer`` toolset.
+
+    Both vetoes run BEFORE the ordinary fuzzy repair: a name that normalizes to a real
+    Hermes tool outside this session's allowlist is rejected, and so is a name within
+    Damerau-Levenshtein distance 1 of one — otherwise a typo of a forbidden tool would
+    fuzzy-match its way into an allowed tool. Anything else falls through to the
+    ordinary repair, whose result is kept only when it is itself allowed."""
+    for candidate in _repair_normalizations(tool_name):
+        if candidate in foreign_names:
+            return None
+        if any(_damerau_le_1(candidate, foreign) for foreign in foreign_names):
+            return None
+    repaired = agent._repair_tool_call(tool_name)
+    return repaired if repaired in valid_names else None
+
+
 def validate_tool_calls(
     agent: Any, assistant_message: Any, finish_reason: str, *, messages: List[Dict[str, Any]],
     conversation_history: Any, api_call_count: int, effective_task_id: Any,
@@ -90,10 +164,22 @@ def validate_tool_calls(
     agent._uniquify_tool_call_ids(tool_calls)
 
     # Repair mismatched tool names before validating (model hallucinations).
+    # Scoped fail-closed repair: only a session that enables the `bouncer` toolset
+    # computes the foreign-name veto set, every other session keeps the plain repair.
+    _bouncer_scoped = bool(agent.enabled_toolsets) and "bouncer" in agent.enabled_toolsets
+    if _bouncer_scoped:
+        from tools.registry import registry as _tool_registry
+        _foreign_names = set(_tool_registry.get_all_tool_names()) - valid_names
+    else:
+        _foreign_names = None
     for tc in tool_calls:
         if tc.function.name not in valid_names:
-            repaired = agent._repair_tool_call(tc.function.name)
-            if repaired:
+            repaired = (
+                _scoped_veto_repair(agent, tc.function.name, valid_names, _foreign_names)
+                if _bouncer_scoped
+                else agent._repair_tool_call(tc.function.name)
+            )
+            if repaired in valid_names:
                 agent._vprint(f"{agent.log_prefix}🔧 Auto-repaired tool name: '{tc.function.name}' -> '{repaired}'",
                               force=True, diagnostic=True)
                 tc.function.name = repaired
