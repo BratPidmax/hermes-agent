@@ -1155,6 +1155,13 @@ def build_turn_context(
 
     _persist_turn_start(agent, messages, conversation_history, pending_cli_message)
 
+    # Context Doctor v1 (Seam A): once-per-session handover-vs-git metadata conflict
+    # check, session-scoped opt-in ("context-doctor" marker, agent/context_doctor.py).
+    # Un-armed sessions pay one membership test; CONFLICT only ever warns (never blocks).
+    from agent.context_doctor import doctor_enabled as _cd_on, session_check as _cd_check
+    if _cd_on(agent):
+        _cd_check(agent)
+
     return TurnContext(
         user_message=user_message, original_user_message=original_user_message, messages=messages,
         conversation_history=conversation_history, active_system_prompt=active_system_prompt,

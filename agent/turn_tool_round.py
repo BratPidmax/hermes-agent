@@ -190,6 +190,15 @@ def run_tool_round(
                     agent.stream_delta_callback(None)
             return _verdict("break")
 
+    # Context Doctor v1 (Seam C advisory): repo mutation while AGENT_HANDOVER.md was
+    # never read in this task. Independent of Grill Me's verdict (never changes
+    # GREEN/YELLOW/RED, never blocks); warns once per batch via _emit_warning.
+    from agent.context_doctor import doctor_enabled as _cd_on, advisory_for_batch as _cd_adv
+    if _cd_on(agent):
+        _cd_note = _cd_adv(agent, assistant_message.tool_calls, effective_task_id)
+        if _cd_note:
+            agent._emit_warning(f"⚠️ Context Doctor (WARNING): {_cd_note}")
+
     agent._execute_tool_calls(assistant_message, messages, effective_task_id, api_call_count)
 
     if getattr(agent, "_incremental_persistence_failed", False):

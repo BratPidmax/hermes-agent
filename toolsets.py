@@ -81,6 +81,10 @@ TOOLSETS = {
     # arm the static batch check at seam C. Conceptually identical to the plugin
     # registered "bouncer" gate; normal sessions never list it and never pay for it.
     "grillme": _ts("Grill Me risk layer opt-in marker (no tools of its own)"),
+    # Session-scoped OPT-IN marker for the Context Doctor context-sanity layer
+    # (agent/context_doctor.py): zero tools; arms the handover-vs-git conflict check
+    # (Seam A) and the mutation-without-handover advisory (Seam C). Advisory-only.
+    "context-doctor": _ts("Context Doctor context sanity opt-in marker (no tools of its own)"),
     # Basic toolsets - individual tool categories
     "web": _ts("Web research and content extraction tools", ["web_search", "web_extract"]),
     "search": _ts("Web search only (no content extraction/scraping)", ["web_search"]),
