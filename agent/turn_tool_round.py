@@ -151,6 +151,45 @@ def run_tool_round(
         with suppress(Exception):
             agent.stream_delta_callback(None)
 
+    # Grill Me v1: static second-opinion check of the validated batch at seam C —
+    # after Bouncer validation, post-call guardrails and mixed-batch filtering,
+    # immediately before anything executes. Session-scoped opt-in ("grillme"
+    # toolset marker, agent/turn_grillme.py); un-armed sessions pay one membership
+    # test. Priority RED > YELLOW > GREEN is an execution decision, not a ranking.
+    from agent.turn_grillme import grillme_enabled as _gmb_on, classify_batch as _gmb
+    if _gmb_on(agent):
+        _gm_trig, _gm_level, _gm_reasons = _gmb(assistant_message.tool_calls)
+        if _gm_trig and _gm_level == "YELLOW":
+            # One warning per batch on the status rail: not a message row, not DB,
+            # not model context; the batch executes.
+            agent._emit_warning(f"⚠️ Grill Me (YELLOW): {', '.join(_gm_reasons)}")
+        elif _gm_trig and _gm_level == "RED":
+            # Halt the WHOLE batch before dispatch (guardrail-halt pattern, :164-179):
+            # every surviving call gets an explicit not-executed result so history
+            # stays replay-safe; nothing claims a tool ran.
+            import json as _gm_json
+            _gm_notes = ", ".join(_gm_reasons)
+            for tc in assistant_message.tool_calls:
+                append_message(messages, {
+                    "role": "tool", "name": tc.function.name,
+                    "tool_call_id": coalesce_tool_call_id(tc),
+                    "content": _gm_json.dumps(
+                        {"grillme_stopped": True,
+                         "note": "Grill Me stopped this batch before running any tool "
+                                 f"({_gm_notes}). Nothing was executed."},
+                        ensure_ascii=False),
+                })
+            final_response = (f"⛔ Grill Me: stopped this batch before execution "
+                              f"({_gm_notes}). No tool ran — nothing was executed.")
+            agent._emit_diagnostic_status(f"⛔ Grill Me halted batch: {_gm_notes}")
+            append_message(messages, {"role": "assistant", "content": final_response})
+            _turn_exit_reason = "grillme_red"
+            if agent.stream_delta_callback:
+                with suppress(Exception):
+                    agent.stream_delta_callback(final_response)
+                    agent.stream_delta_callback(None)
+            return _verdict("break")
+
     agent._execute_tool_calls(assistant_message, messages, effective_task_id, api_call_count)
 
     if getattr(agent, "_incremental_persistence_failed", False):

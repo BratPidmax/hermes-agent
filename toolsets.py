@@ -75,6 +75,12 @@ CLIENT_SURFACE_TOOLSETS = frozenset({"project", "desktop_ui"})
 
 # Core toolset definitions: individual tools or references to other toolsets.
 TOOLSETS = {
+    # Session-scoped OPT-IN marker for the Grill Me plan-check layer
+    # (agent/turn_grillme.py): resolves to zero tools — its only role is surviving in
+    # agent.enabled_toolsets so the scoped gate ``"grillme" in enabled_toolsets`` can
+    # arm the static batch check at seam C. Conceptually identical to the plugin
+    # registered "bouncer" gate; normal sessions never list it and never pay for it.
+    "grillme": _ts("Grill Me risk layer opt-in marker (no tools of its own)"),
     # Basic toolsets - individual tool categories
     "web": _ts("Web research and content extraction tools", ["web_search", "web_extract"]),
     "search": _ts("Web search only (no content extraction/scraping)", ["web_search"]),
