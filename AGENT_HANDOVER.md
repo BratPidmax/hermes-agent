@@ -3,7 +3,7 @@
 Shift-handover notebook for this repository. **Read this first** when taking over work
 here; verify the live Git state before acting (§11). This is not a README (that's
 `README.md`) and not a substitute for Git. All facts below were verified against
-code/tests/git on 2026-10-03; anything unverifiable is marked UNKNOWN / TO VERIFY.
+code/tests/git on 2026-10-04; anything unverifiable is marked UNKNOWN / TO VERIFY.
 Sections 1–5 are the whole picture in a few minutes.
 
 ---
@@ -14,22 +14,25 @@ Sections 1–5 are the whole picture in a few minutes.
   localization + local security layers.
 - **Branch:** `hermes-polish` (tracks `fork/hermes-polish`). Remotes: `fork` =
   github.com/BratPidmax/hermes-agent (push target), `origin` = NousResearch (fetch only).
-- **HEAD:** `69ba936c6d41` = Context Doctor v1 implementation (committed, not yet pushed, no tag).
+- **HEAD:** `0d861a4be855` = grounded-citations research-trigger wording (docs-only;
+  pushed).
 - **Status:** three security/context layers complete; no half-finished refactor in the
-  tree; worktree clean.
+  tree; worktree clean; branch in sync with `fork/hermes-polish` (0 ahead / 0 behind).
 - **Build:** `hermes --version` ≈ `v0.21.5+…` (upstream base `b2860025`).
-- **Most important tagged checkpoint:** tag `grillme-v1` → exactly `5bde0d2e6612`
-  (Context Doctor checkpoint/tag pending — see §4).
+- **Tagged checkpoints (all pushed to `fork`):** `grillme-v1` → `5bde0d2e6612`,
+  `context-doctor-v1` → `556f51b24ecd`, `grounded-citations-v1` → `0d861a4be855`
+  (= current HEAD) — see §4.
 
 ## 2. CURRENT STATE
 
 - **Bouncer v1 — DONE** (commit `c0eb4ebaced9`, pushed; no tag exists — see §4).
 - **Grill Me v1 — DONE** (commit `5bde0d2e6612`, **tag `grillme-v1`**, pushed).
-- **Context Doctor v1 — DONE** (commit `69ba936c6d41`, local, no tag yet; real smoke
-  TEST 10 PASS — §7).
+- **Context Doctor v1 — DONE** (code commit `69ba936c6d41`; checkpoint **tag
+  `context-doctor-v1` → `556f51b24ecd`**, pushed; real smoke TEST 10 PASS — §7).
+- **Grounded-Citations trigger — DONE** (commit `0d861a4be855`, **tag
+  `grounded-citations-v1`**, pushed = current HEAD).
 - **NOT working on:** any code change — nothing is in flight.
-- **Next logical step:** commit of this handover update + Context Doctor checkpoint
-  decision (see §12).
+- **Next logical step:** commit of this documentation-only handover update (see §12).
 - History policy: fast-forward pushes only; no rebase / force / history rewrites.
 
 ## 3. COMPLETED WORK
@@ -119,12 +122,30 @@ Sections 1–5 are the whole picture in a few minutes.
   seams: `agent/turn_context.py:1158–1163` (A), `agent/turn_tool_round.py:193–200`
   (C advisory, before `_execute_tool_calls` :202); `toolsets.py:87` marker
   `"context-doctor"` (zero tools). Activation: `hermes chat -t "hermes-cli,context-doctor"`.
-- **Checkpoint/commit/tag:** `69ba936c6d41` "security: add Context Doctor v1" (local);
-  final tag: NOT YET CREATED.
+- **Checkpoint/commit/tag:** code `69ba936c6d41` "security: add Context Doctor v1"
+  (pushed); checkpoint tag **`context-doctor-v1` → `556f51b24ecd`** "docs: update
+  AGENT_HANDOVER after Context Doctor v1" (annotated, pushed to `fork`). The tag target
+  is a handover-doc commit — intended: the doc update IS part of this checkpoint, so a
+  later doc-only commit never invalidates it (freshness rule above).
 - **Tests:** 25/25 contract tests; real smoke TEST 10 PASS (§7).
 - **What it does NOT do:** no own STALE detector (FileStateRegistry stays the source of
   truth), no token counter/compaction (existing), no blocking, no message rows, no DB,
   no global process state, no prompt copying of the handover.
+
+### Grounded-Citations — research trigger wording
+- **Goal:** "if the agent does research — does it show where it knows this from?"
+  In-repo skill `skills/research/grounded-citations/SKILL.md` carries the trigger the
+  model reads: numbered inline citations, a `url → [n]` ledger script owned by the skill
+  (numbers come from retrieval, never from memory), `[unverified]` flags, and
+  `verify --evidence` for fact-check chains.
+- **Checkpoint/commit/tag:** `0d861a4be855` "docs: improve grounded-citations research
+  trigger" — ONE line (`description:` frontmatter wording, 1 insertion / 1 deletion in
+  `SKILL.md`); tag **`grounded-citations-v1`** (annotated, pushed to `fork`) → exactly
+  this commit = current HEAD.
+- **Scope of that change:** skill wording only — no runtime/agent code, no tests, no
+  behavior change. The mechanism (ledger, evidence, verification) predates this commit
+  and was NOT touched by it.
+- **Tests:** none added or run for this docs-only commit (honestly marked, §10.9).
 
 ## 4. STABLE CHECKPOINTS
 
@@ -132,10 +153,12 @@ Sections 1–5 are the whole picture in a few minutes.
 |---|---|---|---|
 | Bouncer (scoped fail-closed fuzzy repair) | `c0eb4ebaced9` | — (no bouncer tag exists) | complete, pushed to fork |
 | Grill Me v1 (seam C static risk layer) | `5bde0d2e6612` | `grillme-v1` → exactly this commit | complete, pushed to fork |
-| Context Doctor v1 (handover conflict + advisory) | `69ba936c6d41` | — (final checkpoint not yet created) | complete, smoke-verified, local only |
+| Context Doctor v1 (handover conflict + advisory) | code `69ba936c6d41`; tag target `556f51b24ecd` | `context-doctor-v1` → `556f51b24ecd` | complete, smoke-verified, pushed to fork |
+| Grounded-Citations research trigger (skill wording) | `0d861a4be855` | `grounded-citations-v1` → exactly this commit (= HEAD) | complete, pushed to fork |
 | Polish localization line | multiple (e.g. `9f468d29`) | `polish-stable-2026-09-25` (historic) | carried on `hermes-polish` |
 
-Do not invent tags. Never move `grillme-v1`; new checkpoints get new tags.
+Do not invent tags. Never move `grillme-v1`, `context-doctor-v1` or
+`grounded-citations-v1`; new checkpoints get new tags.
 
 ## 5. ARCHITECTURE MAP
 
@@ -157,6 +180,9 @@ model response (tool_calls batch)
 - **Context Doctor = context sanity** (whether the agent is working on current,
   acknowledged project state) — advisory layer, never blocks, never decides permissions.
 - Grill Me does NOT replace Bouncer; Context Doctor replaces NEITHER.
+- **Grounded-Citations is NOT a turn-seam layer** — it is an on-demand skill
+  (`skills/research/grounded-citations/`) the model loads for research. It adds no
+  validation, risk or context hook to the pipeline above.
 
 ## 6. IMPORTANT SEAMS / FILES
 
@@ -173,6 +199,7 @@ model response (tool_calls batch)
 | `tools/approval_detection.py` | `detect_dangerous_command` | reused by Grill Me, unmodified |
 | `tests/agent/test_turn_grillme.py` | 24 contract tests | durable v1 behavior spec |
 | `tests/agent/test_context_doctor.py` | 25 contract tests | durable CD behavior spec |
+| `skills/research/grounded-citations/SKILL.md` (+ `scripts/`, `references/`) | trigger wording v1.2.0, `url → [n]` ledger script, `[unverified]` + `verify --evidence` | research-sourcing skill, not a core seam; checkpoint `grounded-citations-v1` |
 | outside repo (do NOT vendor in) | `~/.hermes/plugins/bouncer/`, `~/.hermes/skills/hermes-bouncer-custom/`, `~/.hermes/config.yaml` | live user-side pieces |
 
 ## 7. TEST STATUS
@@ -241,7 +268,8 @@ NOT errors of the new modules):**
 - **Closed Bouncer** — `agent/turn_tool_validation.py` (hash `32ae0539…`) + bouncer
   plugin/skill outside the repo. Any change = fresh verification campaign first.
 - **Closed Grill Me v1** — tag `grillme-v1`. Do not "improve" speculatively.
-- **Closed Context Doctor v1** — commit `69ba936c6d41`. Advisory-only contract: it must
+- **Closed Context Doctor v1** — code commit `69ba936c6d41`, checkpoint tag
+  `context-doctor-v1` → `556f51b24ecd`. Advisory-only contract: it must
   never gain blocking/RED, never become a second Bouncer/Grill Me, never grow a private
   read-memory (FileStateRegistry stays the single source for read tracking).
 - **Seam placement** — Grill Me stays after validation/persist, before
@@ -252,7 +280,7 @@ NOT errors of the new modules):**
   stay identical for sessions without markers.
 - **Existing tests** — don't rewrite expectations to fit new code; fix forward.
 - **Git** — no rebase/filter/reset/force-push; push to `fork` only; never move
-  `grillme-v1`; fast-forward branches.
+  `grillme-v1`, `context-doctor-v1` or `grounded-citations-v1`; fast-forward branches.
 - **Secrets** — nothing from `~/.hermes/.env` or tokens in any file; pre-push secret scan
   is part of the push ritual (last scan at `c0eb4ebaced9`: clean).
 
@@ -279,10 +307,11 @@ NOT errors of the new modules):**
 
 1. Read `AGENT_HANDOVER.md` (§§1–5 first).
 2. `git status --short` — expect clean.
-3. `git rev-parse HEAD` — expect `69ba936c6d41` (or newer if work continued).
+3. `git rev-parse HEAD` — expect `0d861a4be855` (or newer if work continued).
 4. `git branch --show-current` — expect `hermes-polish`.
-5. `git rev-parse grillme-v1^{commit}` — last tagged checkpoint; `git log -1` — latest
-   committed state (Context Doctor `69ba936c6d41`, its final tag pending).
+5. `git rev-parse` on the three checkpoint tags — newest = `grounded-citations-v1^{commit}`
+   (`0d861a4be855` = HEAD), `context-doctor-v1^{commit}` (`556f51b24ecd`), and
+   `grillme-v1^{commit}` (`5bde0d2e6612`); `git log -1` — latest committed state.
 6. Read only the documentation the current task needs (`AGENTS.md` routing table).
 7. Don't touch closed components (§9) without a reason tied to the actual task.
 
@@ -290,11 +319,13 @@ NOT errors of the new modules):**
 
 ## 12. NEXT WORK
 
-- **Ready:** Bouncer v1 (closed), Grill Me v1 (closed, tagged), Context Doctor v1
-  (closed at `69ba936c6d41`, smoke-verified), durable contract tests (24+25), this
+- **Ready:** Bouncer v1 (closed, untagged), Grill Me v1 (closed, `grillme-v1`),
+  Context Doctor v1 (closed at code `69ba936c6d41`, checkpoint tag
+  `context-doctor-v1` → `556f51b24ecd`, smoke-verified), Grounded-Citations trigger
+  (`grounded-citations-v1` → `0d861a4be855`), durable contract tests (24+25), this
   handover.
-- **Next:** create the Context Doctor checkpoint: commit this handover update, then tag
-  decision (`context-doctor-v1`) + push, per §10 steps 7–8.
+- **Next:** commit this documentation-only handover update so §14 matches live Git
+  (§13 order). No code work is in flight; everything else: TO BE DEFINED.
 - **Still open from earlier:** armed Grill Me runtime smoke (TEST 5 procedure, §7
   TO VERIFY).
 - **Not implemented (deliberately, out of v1 scope):** LLM escalation of YELLOW/RED
@@ -311,14 +342,26 @@ operations: 1) update this document, 2) run the relevant tests, 3) verify Git fa
 §10). Do **not** update the Handover after every minor code line — it documents
 milestones, not churn.
 
+A doc-only commit that updates this file may legitimately be NEWER than the code
+checkpoint declared in §14 — by design, Context Doctor's freshness rule (§3 signal 1)
+treats divergence confined to `AGENT_HANDOVER.md` as PASS, never as a conflict.
+
 ## 14. LAST VERIFIED
 
-- Date: **2026-10-03** (CEST)
-- HEAD verified: `69ba936c6d41d16edf44516eed66bd3ac1dcca5d`
-- Branch: `hermes-polish` (Context Doctor commit local, ahead of `fork/hermes-polish`;
-  tag for this checkpoint not yet created)
+- Date: **2026-10-04** (CEST)
+- HEAD verified: `0d861a4be855202c11ab470a36587f1738b76224`
+- Branch: `hermes-polish`, **in sync with `fork/hermes-polish`** (0 ahead / 0 behind);
+  worktree clean. All three checkpoint tags exist locally **and on `fork`**
+  (`grillme-v1`, `context-doctor-v1`, `grounded-citations-v1`); none on `origin`.
+- Declared checkpoint = code state: Context Doctor code `69ba936c6d41`, its tag target
+  `556f51b24ecd` (handover-doc commit), latest component `0d861a4be855`.
+- Freshness rule still holds (§3 signal 1): commits newer than the HEAD declared here
+  that touch ONLY `AGENT_HANDOVER.md` = PASS, never a conflict. The commit carrying THIS
+  update is exactly such a doc-only commit — expected and correct.
 - Test status: Context Doctor v1 verified — 25 contract tests + 155 combined PASS;
   **real smoke test (TEST 10) PASS**; Bouncer/Grill Me regressions PASS; pre-existing
-  failures listed in §7, not hidden
-- Last tagged checkpoint: `grillme-v1` → `5bde0d2e6612`; latest committed component:
-  Context Doctor v1 → `69ba936c6d41`
+  failures listed in §7, not hidden. **No test run for this documentation-only update**
+  (no code/test/config touched).
+- Tagged checkpoints: `grillme-v1` → `5bde0d2e6612`; `context-doctor-v1` →
+  `556f51b24ecd` (code `69ba936c6d41`); `grounded-citations-v1` → `0d861a4be855` (=
+  HEAD).
